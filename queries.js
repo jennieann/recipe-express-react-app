@@ -9,6 +9,7 @@ var pgp = require('pg-promise')(options);
 
 //get postgres DB
 var db = pgp({
+  connectionString: process.env.DATABASE_URL,
   host: 'localhost',
   port: 5432,
   database: 'recipes',
