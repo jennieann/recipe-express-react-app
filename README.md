@@ -16,3 +16,10 @@ In the package.json for the React App we have set the proxy to port 5000, wich i
 Stand in this folder /workspace/rest-api-recipe/node-postgres-promises.
 From the command line run:
 - sudo -u postgres psql -f recipes.sql
+
+**Read about config**
+# I used this tutorial to set up the project
+- https://daveceddia.com/deploy-react-express-app-heroku/
+
+**Heroku**
+On Heroku right nog you need to write index.html to get to the React client
