@@ -23,3 +23,16 @@ From the command line run:
 
 **Heroku**
 On Heroku right nog you need to write index.html to get to the React client
+
+# Add stuff to the Heroku DB
+`heroku pg:psql
+psql (9.5.2, server 9.6.2)
+SSL connection (cipher: DHE-RSA-AES256-SHA, bits: 256)
+Type "help" for help.
+=> create table test_table (id integer, name text);
+CREATE TABLE
+=> insert into test_table values (1, 'hello database');
+INSERT 0 1
+=> \q `  
+
+\q  == quit the heroku pg:psql
