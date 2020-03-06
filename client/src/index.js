@@ -7,7 +7,6 @@ import Categories from './Categories/Categories';
 import Recipes from './Recipes/Recipes';
 import Recipe from './Recipe/Recipe';
 import AddRecipe from './AddRecipe/AddRecipe';
-// import AddRecipe from './Recipe/AddRecipe/AddRecipe';
 
 const routing = (
   <Router>

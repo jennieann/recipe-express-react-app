@@ -11,6 +11,7 @@ class App extends Component {
           <div className="navbar-container">
             <Link to="/">Hem</Link>
             <Link to="/categories">Kategorier</Link>
+            <Link to="/addRecipe">Lägg till recept</Link>
           </div>
         </nav>
       </div>
