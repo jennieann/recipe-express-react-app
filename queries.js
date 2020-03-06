@@ -8,6 +8,8 @@ var options = {
 var pgp = require('pg-promise')(options);
 
 //get postgres DB
+// connectionString is for Heroku database setup
+// rest is for running on localhost
 var db = pgp({
   connectionString: process.env.DATABASE_URL,
   host: 'localhost',
@@ -18,8 +20,7 @@ var db = pgp({
 });
 
 function getAllCategories(req, res, next) {
-  db
-    .any('select * from categories')
+  db.any('select * from categories')
     .then(function(data) {
       res.status(200).json({
         status: 'success',
@@ -34,13 +35,13 @@ function getAllCategories(req, res, next) {
 
 function getAllRecipesByCategory(req, res, next) {
   var categoryID = parseInt(req.params.id);
-  db
-    .any(
-      'select recipes.name, recipes.id, recipes.ingredients, recipes.description, recipes.difficulty, recipes.time_cooking, recipes.categories_id from recipes left join categories on categories.id=recipes.categories_id where categories.id=$1',
-      categoryID
-    )
+  db.any(
+    'select recipes.name, recipes.id, recipes.ingredients, recipes.description, recipes.difficulty, recipes.time_cooking, recipes.categories_id from recipes left join categories on categories.id=recipes.categories_id where categories.id=$1',
+    categoryID
+  )
     .then(function(data) {
       res.status(200).json({
+        user: user,
         status: 'success',
         data: data,
         message: 'Retrieved ALL recipes from certain category'
@@ -53,8 +54,7 @@ function getAllRecipesByCategory(req, res, next) {
 // add query functions
 //GET all
 function getAllRecipes(req, res, next) {
-  db
-    .any('select * from recipes')
+  db.any('select * from recipes')
     .then(function(data) {
       res.status(200).json({
         status: 'success',
@@ -70,8 +70,7 @@ function getAllRecipes(req, res, next) {
 //GET
 function getSingleRecipe(req, res, next) {
   var RecipeID = parseInt(req.params.id);
-  db
-    .one('select * from recipes where id = $1', RecipeID)
+  db.one('select * from recipes where id = $1', RecipeID)
     .then(function(data) {
       res.status(200).json({
         status: 'success',
@@ -87,16 +86,15 @@ function getSingleRecipe(req, res, next) {
 //POST
 function createRecipe(req, res, next) {
   console.log(req.body);
-  db
-    .none(
-      'insert into recipes(name, ingredients, description, difficulty, time_cooking ,categories_id)' +
-        'values(${name}, ${ingredients}, ${description}, ${difficulty}, ${time_cooking}, ${categories_id})',
-      req.body
-    )
+  db.none(
+    'insert into recipes(name, ingredients, description, difficulty, time_cooking ,categories_id)' +
+      'values(${name}, ${ingredients}, ${description}, ${difficulty}, ${time_cooking}, ${categories_id})',
+    req.body
+  )
     .then(function() {
       res.status(200).json({
         status: 'success',
-        message: 'Inserted one recipe'
+        message: 'Inserted ONE recipe'
       });
     })
     .catch(function(err) {
@@ -107,18 +105,17 @@ function createRecipe(req, res, next) {
 
 //PUT
 function updateRecipe(req, res, next) {
-  db
-    .none(
-      'update recipes set name=$1, ingredients=$2, description=$3, difficulty=$4, time_cooking=$5 where id=$6',
-      [
-        req.body.name,
-        req.body.ingredients,
-        req.body.description,
-        req.body.difficulty,
-        req.body.time_cooking,
-        parseInt(req.params.id)
-      ]
-    )
+  db.none(
+    'update recipes set name=$1, ingredients=$2, description=$3, difficulty=$4, time_cooking=$5 where id=$6',
+    [
+      req.body.name,
+      req.body.ingredients,
+      req.body.description,
+      req.body.difficulty,
+      req.body.time_cooking,
+      parseInt(req.params.id)
+    ]
+  )
     .then(function() {
       res.status(200).json({
         status: 'success',
@@ -133,8 +130,7 @@ function updateRecipe(req, res, next) {
 //DELTE
 function removeRecipe(req, res, next) {
   var RecipeID = parseInt(req.params.id);
-  db
-    .result('delete from recipes where id = $1', RecipeID)
+  db.result('delete from recipes where id = $1', RecipeID)
     .then(function(result) {
       /* jshint ignore:start */
       res.status(200).json({
@@ -147,6 +143,7 @@ function removeRecipe(req, res, next) {
       return next(err);
     });
 }
+
 module.exports = {
   getAllRecipes: getAllRecipes,
   getSingleRecipe: getSingleRecipe,

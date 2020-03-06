@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= 'Du måste logga In'
+  p Welcome
+  form(action="/login" method="post")
+    div
+      label(for="usernam") Username:
+        input(type="text" name="username")
+    div
+      label(for="password") Password:
+        input(type="text" name="password")
+    div
+        input(type="submit" value="LogIn")
+  
+
+
+ 

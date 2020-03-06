@@ -6,6 +6,7 @@ import App from './App';
 import Categories from './Categories/Categories';
 import Recipes from './Recipes/Recipes';
 import Recipe from './Recipe/Recipe';
+import AddRecipe from './AddRecipe/AddRecipe';
 // import AddRecipe from './Recipe/AddRecipe/AddRecipe';
 
 const routing = (
@@ -15,6 +16,7 @@ const routing = (
       <Route path="/categories/" component={Categories} />
       <Route path="/recipes/:id" component={Recipes} />
       <Route path="/recipe/:id" component={Recipe} />
+      <Route path="/addRecipe/" component={AddRecipe} />
     </div>
   </Router>
 );
