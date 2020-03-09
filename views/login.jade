@@ -1,17 +1,17 @@
 extends layout
 
 block content
-  h1= 'Du måste logga In'
-  p Welcome
+  h1= 'Välkommen'
+  h2= 'Logga in'
   form(action="/login" method="post")
     div
-      label(for="usernam") Username:
+      label(for="usernam") Användarnamn:
         input(type="text" name="username")
     div
-      label(for="password") Password:
-        input(type="text" name="password")
+      label(for="password") Lösenord:
+        input(type="password" name="password")
     div
-        input(type="submit" value="LogIn")
+        input(type="submit" value="Logga in")
   
 
 

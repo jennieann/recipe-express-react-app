@@ -10,24 +10,20 @@ router.get('/', function(req, res, next) {
 
 var db = require('../queries');
 
-//hande login
-router.get('/login', function(req, res) {
-  res.render('login');
-});
+let user = '';
 
-router.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
+// recipe endpoints
 
-router.post(
-  '/login',
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log('Hallon', req.user);
-    res.redirect('/');
-  }
-);
+router.get('/api/recipes', db.getAllRecipes);
+router.get('/api/recipes/:id', db.getSingleRecipe);
+
+router.post('/api/recipes', db.createRecipe);
+
+router.put('/api/recipes/:id', db.updateRecipe);
+router.delete('/api/recipes/:id', db.removeRecipe);
+
+router.get('/api/categories', db.getAllCategories);
+router.get('/api/categories/:id/recipe', db.getAllRecipesByCategory);
 
 // user endpoint
 router.get('/api/user', function(req, res) {
@@ -49,18 +45,5 @@ router.get('/api/user', function(req, res) {
     });
   }
 });
-
-// recipe endpoints
-
-router.get('/api/recipes', db.getAllRecipes);
-router.get('/api/recipes/:id', db.getSingleRecipe);
-
-router.post('/api/recipes', db.createRecipe);
-
-router.put('/api/recipes/:id', db.updateRecipe);
-router.delete('/api/recipes/:id', db.removeRecipe);
-
-router.get('/api/categories', db.getAllCategories);
-router.get('/api/categories/:id/recipe', db.getAllRecipesByCategory);
 
 module.exports = router;

@@ -35,13 +35,13 @@ function getAllCategories(req, res, next) {
 
 function getAllRecipesByCategory(req, res, next) {
   var categoryID = parseInt(req.params.id);
+
   db.any(
     'select recipes.name, recipes.id, recipes.ingredients, recipes.description, recipes.difficulty, recipes.time_cooking, recipes.categories_id from recipes left join categories on categories.id=recipes.categories_id where categories.id=$1',
     categoryID
   )
     .then(function(data) {
       res.status(200).json({
-        user: user,
         status: 'success',
         data: data,
         message: 'Retrieved ALL recipes from certain category'
@@ -70,6 +70,7 @@ function getAllRecipes(req, res, next) {
 //GET
 function getSingleRecipe(req, res, next) {
   var RecipeID = parseInt(req.params.id);
+  console.log('Hallå', RecipeID);
   db.one('select * from recipes where id = $1', RecipeID)
     .then(function(data) {
       res.status(200).json({
