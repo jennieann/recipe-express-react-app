@@ -8,6 +8,23 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Recept API', user: req.user });
 });
 
+router.get('/login', function(req, res) {
+  res.render('login');
+});
+
+router.post(
+  '/login',
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
 var db = require('../queries');
 
 let user = '';
