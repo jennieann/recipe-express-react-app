@@ -40,7 +40,9 @@ https://devcenter.heroku.com/articles/git
 
 \q == quit the heroku pg:psql
 
-# Visit on Heroku: https://limitless-shore-39293.herokuapp.com/index.html
+# Visit on Heroku:
+
+https://limitless-shore-39293.herokuapp.com/index.html
 
 **Password**
 http://www.passportjs.org/docs/authenticate/

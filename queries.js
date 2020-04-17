@@ -86,7 +86,7 @@ function getSingleRecipe(req, res, next) {
 
 //POST
 function createRecipe(req, res, next) {
-  console.log(req.body);
+  console.log('Banan', req.body);
   db.none(
     'insert into recipes(name, ingredients, description, difficulty, time_cooking ,categories_id)' +
       'values(${name}, ${ingredients}, ${description}, ${difficulty}, ${time_cooking}, ${categories_id})',
@@ -99,6 +99,7 @@ function createRecipe(req, res, next) {
       });
     })
     .catch(function(err) {
+      console.log('Hallon', req.body);
       console.log(err);
       return next(err);
     });

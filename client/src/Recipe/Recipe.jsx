@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-//import './style.css';
+import './Recipe.css';
 
 class Recipe extends Component {
   state = {
@@ -23,7 +23,7 @@ class Recipe extends Component {
   }
 
   renderIgredients = ingredients => {
-    const ingredientsList = ingredients.split(';');
+    const ingredientsList = ingredients.split('/n');
     return (
       <ul>
         {ingredientsList.map((ingredient, index) => {
@@ -53,9 +53,10 @@ class Recipe extends Component {
           {this.state.recipe.time_cooking}
         </span>
         <h3>Ingredienser</h3>
-        {this.state.ingredients}
+        <div className="text">{this.state.ingredients}</div>
+
         <h3>Gör så här:</h3>
-        {this.state.description}
+        <div className="text">{this.state.description}</div>
       </div>
     );
   }

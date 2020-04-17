@@ -1,0 +1,11 @@
+.recipe-form-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.recipe-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+}

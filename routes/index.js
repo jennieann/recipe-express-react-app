@@ -8,6 +8,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Recept API', user: req.user });
 });
 
+// login endpoints
+
 router.get('/login', function(req, res) {
   res.render('login');
 });
@@ -24,23 +26,6 @@ router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
-
-var db = require('../queries');
-
-let user = '';
-
-// recipe endpoints
-
-router.get('/api/recipes', db.getAllRecipes);
-router.get('/api/recipes/:id', db.getSingleRecipe);
-
-router.post('/api/recipes', db.createRecipe);
-
-router.put('/api/recipes/:id', db.updateRecipe);
-router.delete('/api/recipes/:id', db.removeRecipe);
-
-router.get('/api/categories', db.getAllCategories);
-router.get('/api/categories/:id/recipe', db.getAllRecipesByCategory);
 
 // user endpoint
 router.get('/api/user', function(req, res) {
@@ -62,5 +47,20 @@ router.get('/api/user', function(req, res) {
     });
   }
 });
+
+// recipe endpoints that fetches from db
+
+var db = require('../queries');
+
+router.get('/api/recipes', db.getAllRecipes);
+router.get('/api/recipes/:id', db.getSingleRecipe);
+
+router.post('/api/recipes', db.createRecipe);
+
+router.put('/api/recipes/:id', db.updateRecipe);
+router.delete('/api/recipes/:id', db.removeRecipe);
+
+router.get('/api/categories', db.getAllCategories);
+router.get('/api/categories/:id/recipe', db.getAllRecipesByCategory);
 
 module.exports = router;

@@ -2,6 +2,9 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var multer = require('multer');
+var upload = multer();
 var logger = require('morgan');
 
 var passport = require('passport');
@@ -73,6 +76,12 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(upload.array());
+app.use(express.static('public'));
 
 app.use(logger('dev'));
 app.use(express.json());
