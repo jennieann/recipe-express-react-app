@@ -1,3 +1,14 @@
 .text {
   white-space: pre-wrap;
 }
+
+.recipesWrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recipe {
+  width: 700px;
+}

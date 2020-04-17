@@ -7,15 +7,15 @@ class Categories extends Component {
 
   componentDidMount() {
     fetch('/api/categories')
-      .then(res => res.json())
-      .then(data => this.setState({ categories: data.data }));
+      .then((res) => res.json())
+      .then((data) => this.setState({ categories: data.data }));
   }
 
   render() {
     return (
-      <div className="Categories">
+      <div className="categories">
         <h2>Kategorier</h2>
-        {this.state.categories.map(category => (
+        {this.state.categories.map((category) => (
           <div key={category.id}>
             <Link to={`/recipes/${category.id}`} id={category.id}>
               {category.name}
