@@ -23,7 +23,7 @@ class Recipe extends Component {
   }
 
   renderIgredients = (ingredients) => {
-    const ingredientsList = ingredients.split('/n');
+    const ingredientsList = ingredients.split(';');
     return (
       <ul>
         {ingredientsList.map((ingredient, index) => {
@@ -48,10 +48,10 @@ class Recipe extends Component {
     return (
       <div className="recipesWrapper">
         <div className="recipe">
-          <h2>{this.state.recipe.name}</h2>
+          <h2 className="recipe-title">{this.state.recipe.name}</h2>
           <span>
-            Svårighetsgrad: {this.state.recipe.difficulty}&nbsp; Tid:
-            {this.state.recipe.time_cooking}
+            Svårighetsgrad: {this.state.recipe.difficulty}&nbsp;|&nbsp;
+            <i class="far fa-clock" /> {this.state.recipe.time_cooking}
           </span>
           <h3>Ingredienser</h3>
           <div className="text">{this.state.ingredients}</div>

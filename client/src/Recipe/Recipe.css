@@ -1,3 +1,5 @@
+@import '../styles.css';
+
 .text {
   white-space: pre-wrap;
 }
@@ -5,10 +7,20 @@
 .recipesWrapper {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  margin: var(--spacing-20);
 }
 
 .recipe {
-  width: 700px;
+  background: #deeaee;
+  border-radius: 6px;
+  color: var(--dusk-light);
+  font-size: var(--font-size-16);
+  overflow-wrap: break-word;
+  padding: 20px;
+  width: 75%;
+}
+
+.recipe-title {
+  font-family: var(--font-family-headers);
+  font-size: var(--font-size-32);
 }

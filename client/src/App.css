@@ -1,32 +1,64 @@
+@import 'styles.css';
+html {
+  font-size: 62.5%;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.navbar {
+  background: var(--mystic);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  width: 75%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.nav-link {
+  color: var(--fuzzy-wuzzy-brown);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-bold);
+  padding: var(--spacing-20) var(--spacing-4);
+  text-decoration: none;
+}
+.nav-link:hover,
+.nav-link-active {
+  color: var(--mystic);
+  background-color: var(--sea-pink);
+}
+
+.header {
+  background-image: url(/images/raspberries.png);
+  color: var(--dusk-light);
+  font-size: var(--font-size-32);
+  height: 140px;
+  margin-bottom: var(--spacing-20);
+
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* @media (--phablet-and-larger) {
+  .header {
+    width: 1000px;
+    font-size: var(--font-size-72);
   }
-  to {
-    transform: rotate(360deg);
+} */
+@media screen and (min-width: 640px) {
+  .header {
+    font-size: var(--font-size-72);
+    max-width: 1000px;
+  }
+  .nav-link {
+    font-size: var(--font-size-20);
+    padding: var(--spacing-20);
   }
 }
