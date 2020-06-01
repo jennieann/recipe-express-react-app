@@ -14,7 +14,6 @@ html {
   background: var(--mystic);
   border-radius: 4px;
   display: flex;
-  justify-content: center;
   padding: 20px;
   width: 75%;
 }
@@ -33,17 +32,15 @@ html {
 }
 
 .header {
+  align-items: center;
   background-image: url(/images/raspberries.png);
   color: var(--dusk-light);
+  display: flex;
   font-size: var(--font-size-32);
   height: 140px;
-  margin-bottom: var(--spacing-20);
-
-  width: 100%;
-
-  display: flex;
   justify-content: center;
-  align-items: center;
+  margin-bottom: var(--spacing-20);
+  width: 100%;
 }
 
 /* @media (--phablet-and-larger) {

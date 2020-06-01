@@ -7,7 +7,7 @@
 .recipesWrapper {
   display: flex;
   justify-content: center;
-  margin: var(--spacing-20);
+  margin: var(--spacing-20) 0;
 }
 
 .recipe {
