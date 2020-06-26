@@ -1,4 +1,21 @@
 @import '../styles.css';
+.arrow {
+  font-size: var(--font-size-14);
+  color: var(--fuzzy-wuzzy-brown);
+  margin-left: var(--spacing-2);
+}
+.bread-crum {
+  font-size: var(--font-size-14);
+  color: var(--fuzzy-wuzzy-brown);
+  margin-left: var(--spacing-2);
+  padding: var(--spacing-4);
+  text-decoration: none;
+}
+
+.bread-crum:hover {
+  background-color: var(--sea-pink);
+  color: var(--mystic);
+}
 
 .text {
   white-space: pre-wrap;

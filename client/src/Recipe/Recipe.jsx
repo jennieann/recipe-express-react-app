@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-
+import { checkLoggedIn, getCategoryName } from '../helpers.js';
 import './Recipe.css';
 
 class Recipe extends Component {
   state = {
     recipe: {},
     ingredients: '',
+    user: null,
   };
 
   componentDidMount() {
@@ -20,6 +21,10 @@ class Recipe extends Component {
           description: this.renderDescription(this.state.recipe.description),
         });
       });
+
+    fetch('/api/user')
+      .then((res) => res.json())
+      .then((user) => this.setState({ user: user.user }));
   }
 
   renderIgredients = (ingredients) => {
@@ -48,6 +53,15 @@ class Recipe extends Component {
     return (
       <div className="recipesWrapper">
         <div className="recipe">
+          <h2>
+            <a href="/#/categories" className="bread-crum">
+              Kategorier
+            </a>
+            <span className="arrow">{'>'}</span>
+            <a href="/#/recipes/1" className="bread-crum">
+              {getCategoryName(this.state.recipe.categories_id)}
+            </a>
+          </h2>
           <h2 className="recipe-title">{this.state.recipe.name}</h2>
           <span>
             Svårighetsgrad: {this.state.recipe.difficulty}&nbsp;|&nbsp;
@@ -58,6 +72,11 @@ class Recipe extends Component {
 
           <h3>Gör så här:</h3>
           <div className="text">{this.state.description}</div>
+          {checkLoggedIn(this.state.user) && (
+            <a href={`#/addRecipe/${this.state.recipe.id}`}>
+              Editera <i class="far fa-edit" />
+            </a>
+          )}
         </div>
       </div>
     );
