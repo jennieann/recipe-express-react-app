@@ -16,6 +16,7 @@ const routing = (
       <Route path="/recipes/:id" component={Recipes} />
       <Route path="/recipe/:id" component={Recipe} />
       <Route path="/addRecipe/" component={AddRecipe} />
+      <Route path="/updateRecipe/" key={Math.random()} component={AddRecipe} />
     </div>
   </Router>
 );
