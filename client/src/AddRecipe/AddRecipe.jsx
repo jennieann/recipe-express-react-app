@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import checkLoggedIn from '../helpers.js';
 import './AddRecipe.css';
 
-const recipeId = window.location.href.split('/')[5];
-
 class AddRecipe extends Component {
-  state = { user: null, recipe: {} };
+  state = { user: null, recipe: {}, refresh: false };
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,7 +12,7 @@ class AddRecipe extends Component {
   async getRecipeAsync(recipeId) {
     let response = await fetch(`/api/recipes/${recipeId}`);
     let data = await response.json();
-    console.log('data', data);
+    //console.log('data', data);
     return data;
   }
 
@@ -25,18 +23,23 @@ class AddRecipe extends Component {
   }
 
   componentDidMount() {
-    if (recipeId) {
-      this.getRecipeAsync(recipeId).then((data) => {
+    if (this.getRecipeID()) {
+      this.getRecipeAsync(this.getRecipeID()).then((data) => {
         this.setState({ recipe: data.data });
       });
     }
     this.getUser().then((user) => this.setState({ user: user.user }));
   }
 
+  getRecipeID() {
+    const recipeId = window.location.href.split('/')[5];
+    return recipeId;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
-
+    const recipeId = this.getRecipeID();
     if (recipeId) {
       fetch(`/api/recipes/${recipeId}`, {
         method: 'PUT',
@@ -71,7 +74,7 @@ class AddRecipe extends Component {
               />
 
               <label htmlFor="ingredients">Ingredienser</label>
-              <textarea
+              <input
                 cols="50"
                 rows="10"
                 id="ingredients"
@@ -81,7 +84,7 @@ class AddRecipe extends Component {
               />
 
               <label htmlFor="description">Beskrivning</label>
-              <textarea
+              <input
                 cols="50"
                 rows="10"
                 id="description"
@@ -102,19 +105,19 @@ class AddRecipe extends Component {
               <select id="difficulty" name="difficulty">
                 <option
                   value="Lätt"
-                  selected={recipe.difficulty == 'Lätt' ? 'selected' : ''}
+                  selected={recipe.difficulty === 'Lätt' ? 'selected' : ''}
                 >
                   Lätt
                 </option>
                 <option
                   value="Medel"
-                  selected={recipe.difficulty == 'Medel' ? 'selected' : ''}
+                  selected={recipe.difficulty === 'Medel' ? 'selected' : ''}
                 >
                   Medel
                 </option>
                 <option
                   value="Svår"
-                  selected={recipe.difficulty == 'Svår' ? 'selected' : ''}
+                  selected={recipe.difficulty === 'Svår' ? 'selected' : ''}
                 >
                   Svårt
                 </option>
@@ -124,25 +127,25 @@ class AddRecipe extends Component {
               <select id="categories_id" name="categories_id">
                 <option
                   value="3"
-                  selected={recipe.categories_id == 3 ? 'selected' : ''}
+                  selected={recipe.categories_id === 3 ? 'selected' : ''}
                 >
                   Förrätt
                 </option>
                 <option
                   value="4"
-                  selected={recipe.categories_id == 4 ? 'selected' : ''}
+                  selected={recipe.categories_id === 4 ? 'selected' : ''}
                 >
                   Middag
                 </option>
                 <option
                   value="1"
-                  selected={recipe.categories_id == 1 ? 'selected' : ''}
+                  selected={recipe.categories_id === 1 ? 'selected' : ''}
                 >
                   Dessert
                 </option>
                 <option
                   value="5"
-                  selected={recipe.categories_id == 5 ? 'selected' : ''}
+                  selected={recipe.categories_id === 5 ? 'selected' : ''}
                 >
                   Bakning
                 </option>
