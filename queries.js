@@ -2,7 +2,7 @@ var promise = require('bluebird');
 
 var options = {
   // Initialization Options
-  promiseLib: promise
+  promiseLib: promise,
 };
 
 var pgp = require('pg-promise')(options);
@@ -16,19 +16,35 @@ var db = pgp({
   port: 5432,
   database: 'recipes',
   user: 'postgres',
-  password: '7433'
+  password: '7433',
 });
 
 function getAllCategories(req, res, next) {
-  db.any('select * from categories')
-    .then(function(data) {
+  db.any('select * from categories WHERE parent_id IS NULL')
+    .then(function (data) {
       res.status(200).json({
         status: 'success',
         data: data,
-        message: 'Retrieved ALL categories'
+        message: 'Retrieved ALL categories',
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+function getAllSubCategories(req, res, next) {
+  db.any(
+    'select * from categories WHERE parent_id IS NOT NULL ORDER BY parent_id, name'
+  )
+    .then(function (data) {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved ALL sub categories',
+      });
+    })
+    .catch(function (err) {
       return next(err);
     });
 }
@@ -40,14 +56,14 @@ function getAllRecipesByCategory(req, res, next) {
     'select recipes.name, recipes.id, recipes.ingredients, recipes.description, recipes.difficulty, recipes.time_cooking, recipes.categories_id from recipes left join categories on categories.id=recipes.categories_id where categories.id=$1',
     categoryID
   )
-    .then(function(data) {
+    .then(function (data) {
       res.status(200).json({
         status: 'success',
         data: data,
-        message: 'Retrieved ALL recipes from certain category'
+        message: 'Retrieved ALL recipes from certain category',
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       return next(err);
     });
 }
@@ -55,14 +71,14 @@ function getAllRecipesByCategory(req, res, next) {
 //GET all
 function getAllRecipes(req, res, next) {
   db.any('select * from recipes')
-    .then(function(data) {
+    .then(function (data) {
       res.status(200).json({
         status: 'success',
         data: data,
-        message: 'Retrieved ALL recipes'
+        message: 'Retrieved ALL recipes',
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       return next(err);
     });
 }
@@ -72,14 +88,14 @@ function getSingleRecipe(req, res, next) {
   var RecipeID = parseInt(req.params.id);
   console.log('Hallå', RecipeID);
   db.one('select * from recipes where id = $1', RecipeID)
-    .then(function(data) {
+    .then(function (data) {
       res.status(200).json({
         status: 'success',
         data: data,
-        message: 'Retrieved ONE Recipe'
+        message: 'Retrieved ONE Recipe',
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       return next(err);
     });
 }
@@ -92,13 +108,13 @@ function createRecipe(req, res, next) {
       'values(${name}, ${ingredients}, ${description}, ${difficulty}, ${time_cooking}, ${categories_id})',
     req.body
   )
-    .then(function() {
+    .then(function () {
       res.status(200).json({
         status: 'success',
-        message: 'Inserted ONE recipe'
+        message: 'Inserted ONE recipe',
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log('Hallon', req.body);
       console.log(err);
       return next(err);
@@ -108,23 +124,24 @@ function createRecipe(req, res, next) {
 //PUT
 function updateRecipe(req, res, next) {
   db.none(
-    'update recipes set name=$1, ingredients=$2, description=$3, difficulty=$4, time_cooking=$5 where id=$6',
+    'update recipes set name=$1, ingredients=$2, description=$3, difficulty=$4, time_cooking=$5 , categories_id=$6 where id=$7',
     [
       req.body.name,
       req.body.ingredients,
       req.body.description,
       req.body.difficulty,
       req.body.time_cooking,
-      parseInt(req.params.id)
+      req.body.categories_id,
+      parseInt(req.params.id),
     ]
   )
-    .then(function() {
+    .then(function () {
       res.status(200).json({
         status: 'success',
-        message: 'Updated Recipe'
+        message: 'Updated Recipe',
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       return next(err);
     });
 }
@@ -133,15 +150,15 @@ function updateRecipe(req, res, next) {
 function removeRecipe(req, res, next) {
   var RecipeID = parseInt(req.params.id);
   db.result('delete from recipes where id = $1', RecipeID)
-    .then(function(result) {
+    .then(function (result) {
       /* jshint ignore:start */
       res.status(200).json({
         status: 'success',
-        message: `Removed ${result.rowCount} Recipe`
+        message: `Removed ${result.rowCount} Recipe`,
       });
       /* jshint ignore:end */
     })
-    .catch(function(err) {
+    .catch(function (err) {
       return next(err);
     });
 }
@@ -153,5 +170,6 @@ module.exports = {
   updateRecipe: updateRecipe,
   removeRecipe: removeRecipe,
   getAllCategories: getAllCategories,
-  getAllRecipesByCategory: getAllRecipesByCategory
+  getAllRecipesByCategory: getAllRecipesByCategory,
+  getAllSubCategories: getAllSubCategories,
 };

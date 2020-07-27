@@ -3,7 +3,7 @@ import checkLoggedIn from '../helpers.js';
 import './AddRecipe.css';
 
 class AddRecipe extends Component {
-  state = { user: null, recipe: {}, refresh: false };
+  state = { user: null, recipe: {}, subCategories: [] };
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,6 +22,12 @@ class AddRecipe extends Component {
     return user;
   }
 
+  async getSubCategories() {
+    let response = await fetch('/api/subcategories');
+    let subCategories = await response.json();
+    return subCategories;
+  }
+
   componentDidMount() {
     if (this.getRecipeID()) {
       this.getRecipeAsync(this.getRecipeID()).then((data) => {
@@ -29,6 +35,10 @@ class AddRecipe extends Component {
       });
     }
     this.getUser().then((user) => this.setState({ user: user.user }));
+
+    this.getSubCategories().then((data) =>
+      this.setState({ subCategories: data.data })
+    );
   }
 
   getRecipeID() {
@@ -59,6 +69,47 @@ class AddRecipe extends Component {
     const recipe = this.state.recipe;
 
     const { ingredients, time_cooking, description, name } = recipe;
+
+    const subCategories = this.state.subCategories;
+
+    const subCategoryOptions = [];
+
+    const getCategoryName = (categoryId) => {
+      let name;
+      switch (categoryId) {
+        case 1:
+          name = 'Dessert';
+          break;
+        case 3:
+          name = 'Förrätt';
+          break;
+        case 4:
+          name = 'Middag';
+          break;
+        case 5:
+          name = 'Bakning';
+          break;
+        default:
+          name = 'Ingen kategori';
+      }
+
+      return name;
+    };
+
+    subCategories.forEach(function(subCategoryItem) {
+      let category = '';
+      category = getCategoryName(subCategoryItem.parent_id);
+      subCategoryOptions.push(
+        <option
+          value={subCategoryItem.id}
+          selected={
+            recipe.categories_id === subCategoryItem.id ? 'selected' : ''
+          }
+        >
+          {subCategoryItem.name} ({category})
+        </option>
+      );
+    });
 
     return (
       <div className="recipe-form-wrapper">
@@ -151,6 +202,10 @@ class AddRecipe extends Component {
                 >
                   Bakning
                 </option>
+              </select>
+              <label htmlFor="sub_category_id">Underkategori</label>
+              <select id="sub_category_id" name="sub_category_id">
+                {subCategoryOptions}
               </select>
               {this.state.recipe ? (
                 <button>Uppdatera recept</button>

@@ -4,31 +4,31 @@ var router = express.Router();
 var passport = require('passport');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('index', { title: 'Recept API', user: req.user });
 });
 
 // login endpoints
 
-router.get('/login', function(req, res) {
+router.get('/login', function (req, res) {
   res.render('login');
 });
 
 router.post(
   '/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
+  function (req, res) {
     res.redirect('/');
   }
 );
 
-router.get('/logout', function(req, res) {
+router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
 });
 
 // user endpoint
-router.get('/api/user', function(req, res) {
+router.get('/api/user', function (req, res) {
   const user = req.user ? req.user : null;
 
   if (user) {
@@ -36,14 +36,14 @@ router.get('/api/user', function(req, res) {
       status: 'success',
       user: user,
       code: 200,
-      message: 'Get user'
+      message: 'Get user',
     });
   } else {
     res.status(401).json({
       status: 'unauthorized',
       user: user,
       code: 401,
-      message: 'Login Required'
+      message: 'Login Required',
     });
   }
 });
@@ -62,5 +62,7 @@ router.delete('/api/recipes/:id', db.removeRecipe);
 
 router.get('/api/categories', db.getAllCategories);
 router.get('/api/categories/:id/recipe', db.getAllRecipesByCategory);
+
+router.get('/api/subcategories', db.getAllSubCategories);
 
 module.exports = router;
