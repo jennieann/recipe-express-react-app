@@ -74,22 +74,24 @@ class AddRecipe extends Component {
               />
 
               <label htmlFor="ingredients">Ingredienser</label>
-              <input
+              <textarea
                 cols="50"
                 rows="10"
                 id="ingredients"
                 name="ingredients"
                 type="text"
+                value={this.state.recipe.ingredients}
                 defaultValue={recipe ? ingredients : ''}
               />
 
               <label htmlFor="description">Beskrivning</label>
-              <input
+              <textarea
                 cols="50"
                 rows="10"
                 id="description"
                 name="description"
                 type="text"
+                value={this.state.recipe.ingredients}
                 defaultValue={recipe ? description : ''}
               />
 
