@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { checkLoggedIn, getCategoryName } from '../helpers.js';
 import './Recipe.css';
 
@@ -73,9 +74,9 @@ class Recipe extends Component {
           <h3>Gör så här:</h3>
           <div className="text">{this.state.description}</div>
           {checkLoggedIn(this.state.user) && (
-            <a href={`#/addRecipe/${this.state.recipe.id}`}>
+            <Link to={`/updateRecipe/${this.state.recipe.id}`}>
               Editera <i class="far fa-edit" />
-            </a>
+            </Link>
           )}
         </div>
       </div>
