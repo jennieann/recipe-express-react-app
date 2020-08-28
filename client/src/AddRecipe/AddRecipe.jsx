@@ -3,10 +3,16 @@ import { checkLoggedIn, getCategories } from "../helpers.js"
 import "./AddRecipe.css"
 
 class AddRecipe extends Component {
-  state = { user: null, recipe: {}, subCategories: [], categories: [] }
+  state = {
+    user: null,
+    recipe: { name: "" },
+    subCategories: [],
+    categories: []
+  }
   constructor() {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   async getRecipeAsync(recipeId) {
@@ -79,7 +85,7 @@ class AddRecipe extends Component {
       const categoryName = category.name
 
       subCategoryOptions.push(
-        <option value={subCategoryItem.id}>
+        <option value={subCategoryItem.id} key={subCategoryItem.id}>
           {subCategoryItem.name} ({categoryName})
         </option>
       )
@@ -93,10 +99,18 @@ class AddRecipe extends Component {
 
     cats.forEach(function(categoryItem) {
       categoryOptions.push(
-        <option value={categoryItem.id}>{categoryItem.name}</option>
+        <option value={categoryItem.id} key={categoryItem.id}>
+          {categoryItem.name}
+        </option>
       )
     })
     return categoryOptions
+  }
+
+  handleChange(event) {
+    this.setState({
+      recipe: { ...this.state.recipe, [event.target.name]: event.target.value }
+    })
   }
 
   render() {
@@ -104,7 +118,15 @@ class AddRecipe extends Component {
 
     const recipe = this.state.recipe
 
-    const { ingredients, time_cooking, description, name } = recipe
+    const {
+      ingredients,
+      time_cooking,
+      description,
+      name,
+      categories_id,
+      difficulty,
+      sub_category_id
+    } = recipe
 
     return (
       <div className="recipe-form-wrapper">
@@ -116,7 +138,8 @@ class AddRecipe extends Component {
                 id="name"
                 name="name"
                 type="text"
-                defaultValue={recipe ? name : ""}
+                value={name}
+                onChange={this.handleChange}
               />
 
               <label htmlFor="ingredients">Ingredienser</label>
@@ -126,8 +149,8 @@ class AddRecipe extends Component {
                 id="ingredients"
                 name="ingredients"
                 type="text"
-                value={this.state.recipe.ingredients}
-                defaultValue={recipe ? ingredients : ""}
+                value={ingredients}
+                onChange={this.handleChange}
               />
 
               <label htmlFor="description">Beskrivning</label>
@@ -137,8 +160,8 @@ class AddRecipe extends Component {
                 id="description"
                 name="description"
                 type="text"
-                value={this.state.recipe.ingredients}
-                defaultValue={recipe ? description : ""}
+                value={description}
+                onChange={this.handleChange}
               />
 
               <label htmlFor="time_cooking">Tidsåtgång</label>
@@ -153,7 +176,8 @@ class AddRecipe extends Component {
               <select
                 id="difficulty"
                 name="difficulty"
-                value={this.state.recipe.difficulty}
+                value={difficulty}
+                onChange={this.handleChange}
               >
                 <option value="Lätt">Lätt</option>
                 <option value="Medel">Medel</option>
@@ -164,7 +188,8 @@ class AddRecipe extends Component {
               <select
                 id="categories_id"
                 name="categories_id"
-                value={this.state.recipe.categories_id}
+                value={categories_id}
+                onChange={this.handleChange}
               >
                 {this.renderCategoryOption()}
               </select>
@@ -172,7 +197,8 @@ class AddRecipe extends Component {
               <select
                 id="sub_category_id"
                 name="sub_category_id"
-                value={this.state.recipe.sub_category_id}
+                value={sub_category_id}
+                onChange={this.handleChange}
               >
                 {this.renderSubCategoryOptions()}
               </select>
