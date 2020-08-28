@@ -1,15 +1,34 @@
-export const checkLoggedIn = (user) => {
-  let isLoggedIn = false;
+export const checkLoggedIn = user => {
+  let isLoggedIn = false
   if (user != null) {
-    return (isLoggedIn = true);
+    return (isLoggedIn = true)
   }
-  return isLoggedIn;
-};
+  return isLoggedIn
+}
+const getCategoriesFromAPI = () => {
+  return fetch("/api/categories")
+    .then(res => res.json())
+    .then(data => {
+      const categories = data.data
 
-export const getCategoryName = (categoryId) => {
-  const categoryNames = ['', 'Dessert', 'Förrätt', 'Middag', 'Bakning'];
+      return categories
+    })
+}
 
-  return categoryNames[categoryId];
-};
+export const getCategoryName = async categoryId => {
+  const categoriesNames = await getCategoriesFromAPI()
 
-export default checkLoggedIn;
+  const category = categoriesNames.find(category => {
+    return category.id === categoryId
+  })
+
+  return category.name
+}
+
+export const getCategories = async categoryId => {
+  const categories = await getCategoriesFromAPI()
+
+  return categories
+}
+
+export default checkLoggedIn
