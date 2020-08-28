@@ -62,13 +62,13 @@ class Recipe extends Component {
       <div className="recipesWrapper">
         <div className="recipe">
           <h2>
-            <a href="/#/categories" className="bread-crum">
+            <a href="/index.html#/categories" className="bread-crum">
               Kategorier
             </a>
             <span className="arrow">{">"}</span>
 
             <a
-              href={`/#/recipes/${this.state.recipe.categories_id}`}
+              href={`/index.html#/recipes/${this.state.recipe.categories_id}`}
               className="bread-crum"
             >
               {this.state.categoryName}
