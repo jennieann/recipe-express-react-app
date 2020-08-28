@@ -71,7 +71,6 @@ class AddRecipe extends Component {
     const subCategories = this.state.subCategories
     const categories = this.state.categories
     const subCategoryOptions = []
-    const subCategoryId = this.state.recipe.sub_category_id
 
     subCategories.forEach(function(subCategoryItem) {
       const category = categories.find(
@@ -80,10 +79,7 @@ class AddRecipe extends Component {
       const categoryName = category.name
 
       subCategoryOptions.push(
-        <option
-          value={subCategoryItem.id}
-          selected={subCategoryId === subCategoryItem.id ? "selected" : null}
-        >
+        <option value={subCategoryItem.id}>
           {subCategoryItem.name} ({categoryName})
         </option>
       )
@@ -94,16 +90,10 @@ class AddRecipe extends Component {
   renderCategoryOption() {
     const cats = this.state.categories
     const categoryOptions = []
-    const categoryId = this.state.recipe.categories_id
 
     cats.forEach(function(categoryItem) {
       categoryOptions.push(
-        <option
-          value={categoryItem.id}
-          selected={categoryId === categoryItem.id ? "selected" : null}
-        >
-          {categoryItem.name}
-        </option>
+        <option value={categoryItem.id}>{categoryItem.name}</option>
       )
     })
     return categoryOptions
@@ -160,33 +150,30 @@ class AddRecipe extends Component {
               />
 
               <label htmlFor="difficulty">Svårighetsgrad</label>
-              <select id="difficulty" name="difficulty">
-                <option
-                  value="Lätt"
-                  selected={recipe.difficulty === "Lätt" ? "selected" : ""}
-                >
-                  Lätt
-                </option>
-                <option
-                  value="Medel"
-                  selected={recipe.difficulty === "Medel" ? "selected" : ""}
-                >
-                  Medel
-                </option>
-                <option
-                  value="Svår"
-                  selected={recipe.difficulty === "Svår" ? "selected" : ""}
-                >
-                  Svårt
-                </option>
+              <select
+                id="difficulty"
+                name="difficulty"
+                value={this.state.recipe.difficulty}
+              >
+                <option value="Lätt">Lätt</option>
+                <option value="Medel">Medel</option>
+                <option value="Svår">Svårt</option>
               </select>
 
               <label htmlFor="category">Kategori</label>
-              <select id="categories_id" name="categories_id">
+              <select
+                id="categories_id"
+                name="categories_id"
+                value={this.state.recipe.categories_id}
+              >
                 {this.renderCategoryOption()}
               </select>
               <label htmlFor="sub_category_id">Underkategori</label>
-              <select id="sub_category_id" name="sub_category_id">
+              <select
+                id="sub_category_id"
+                name="sub_category_id"
+                value={this.state.recipe.sub_category_id}
+              >
                 {this.renderSubCategoryOptions()}
               </select>
               {this.state.recipe ? (
