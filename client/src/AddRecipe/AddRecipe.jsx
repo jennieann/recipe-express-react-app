@@ -67,53 +67,54 @@ class AddRecipe extends Component {
     }
   }
 
-  render() {
-    const isLoggedIn = checkLoggedIn(this.state.user)
-
-    const recipe = this.state.recipe
-
-    const {
-      ingredients,
-      time_cooking,
-      description,
-      name,
-      sub_category_id,
-      categories_id
-    } = recipe
-
+  renderSubCategoryOptions() {
     const subCategories = this.state.subCategories
-
+    const categories = this.state.categories
     const subCategoryOptions = []
-
-    const categoryOptions = []
-
-    const cats = this.state.categories
+    const subCategoryId = this.state.recipe.sub_category_id
 
     subCategories.forEach(function(subCategoryItem) {
-      const category = cats.find(cat => cat.id === subCategoryItem.parent_id)
-
+      const category = categories.find(
+        cat => cat.id === subCategoryItem.parent_id
+      )
       const categoryName = category.name
 
       subCategoryOptions.push(
         <option
           value={subCategoryItem.id}
-          selected={sub_category_id === subCategoryItem.id ? "selected" : null}
+          selected={subCategoryId === subCategoryItem.id ? "selected" : null}
         >
           {subCategoryItem.name} ({categoryName})
         </option>
       )
     })
+    return subCategoryOptions
+  }
+
+  renderCategoryOption() {
+    const cats = this.state.categories
+    const categoryOptions = []
+    const categoryId = this.state.recipe.categories_id
 
     cats.forEach(function(categoryItem) {
       categoryOptions.push(
         <option
           value={categoryItem.id}
-          selected={categories_id === categoryItem.id ? "selected" : null}
+          selected={categoryId === categoryItem.id ? "selected" : null}
         >
           {categoryItem.name}
         </option>
       )
     })
+    return categoryOptions
+  }
+
+  render() {
+    const isLoggedIn = checkLoggedIn(this.state.user)
+
+    const recipe = this.state.recipe
+
+    const { ingredients, time_cooking, description, name } = recipe
 
     return (
       <div className="recipe-form-wrapper">
@@ -182,11 +183,11 @@ class AddRecipe extends Component {
 
               <label htmlFor="category">Kategori</label>
               <select id="categories_id" name="categories_id">
-                {categoryOptions}
+                {this.renderCategoryOption()}
               </select>
               <label htmlFor="sub_category_id">Underkategori</label>
               <select id="sub_category_id" name="sub_category_id">
-                {subCategoryOptions}
+                {this.renderSubCategoryOptions()}
               </select>
               {this.state.recipe ? (
                 <button>Uppdatera recept</button>
