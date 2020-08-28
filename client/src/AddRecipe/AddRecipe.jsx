@@ -77,12 +77,15 @@ class AddRecipe extends Component {
       time_cooking,
       description,
       name,
-      sub_category_id
+      sub_category_id,
+      categories_id
     } = recipe
 
     const subCategories = this.state.subCategories
 
     const subCategoryOptions = []
+
+    const categoryOptions = []
 
     const cats = this.state.categories
 
@@ -97,6 +100,17 @@ class AddRecipe extends Component {
           selected={sub_category_id === subCategoryItem.id ? "selected" : null}
         >
           {subCategoryItem.name} ({categoryName})
+        </option>
+      )
+    })
+
+    cats.forEach(function(categoryItem) {
+      categoryOptions.push(
+        <option
+          value={categoryItem.id}
+          selected={categories_id === categoryItem.id ? "selected" : null}
+        >
+          {categoryItem.name}
         </option>
       )
     })
@@ -168,30 +182,7 @@ class AddRecipe extends Component {
 
               <label htmlFor="category">Kategori</label>
               <select id="categories_id" name="categories_id">
-                <option
-                  value="3"
-                  selected={recipe.categories_id === 3 ? "selected" : ""}
-                >
-                  Förrätt
-                </option>
-                <option
-                  value="4"
-                  selected={recipe.categories_id === 4 ? "selected" : ""}
-                >
-                  Middag
-                </option>
-                <option
-                  value="1"
-                  selected={recipe.categories_id === 1 ? "selected" : ""}
-                >
-                  Dessert
-                </option>
-                <option
-                  value="5"
-                  selected={recipe.categories_id === 5 ? "selected" : ""}
-                >
-                  Bakning
-                </option>
+                {categoryOptions}
               </select>
               <label htmlFor="sub_category_id">Underkategori</label>
               <select id="sub_category_id" name="sub_category_id">
