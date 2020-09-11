@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { checkLoggedIn, getCategories } from "../helpers.js"
-import "./AddRecipe.css"
+import styles from "./AddRecipe.module.css"
 
 class AddRecipe extends Component {
   state = {
@@ -34,7 +34,7 @@ class AddRecipe extends Component {
     return subCategories
   }
 
-  componentDidMount() {
+  componentWillMount() {
     getCategories().then(categories => {
       this.setState({ categories: categories })
     })
@@ -129,10 +129,10 @@ class AddRecipe extends Component {
     } = recipe
 
     return (
-      <div className="recipe-form-wrapper">
+      <div className={styles.recipeWrapper}>
         {isLoggedIn ? (
           <div>
-            <form onSubmit={this.handleSubmit} className="recipe-form">
+            <form onSubmit={this.handleSubmit} className={styles.recipeForm}>
               <label htmlFor="name">Receptnamn</label>
               <input
                 id="name"

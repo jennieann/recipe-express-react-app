@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { checkLoggedIn, getCategoryName } from "../helpers.js"
-import "./Recipe.css"
+import styles from "./Recipe.module.css"
 
 class Recipe extends Component {
   state = {
@@ -59,22 +59,22 @@ class Recipe extends Component {
 
   render() {
     return (
-      <div className="recipesWrapper">
-        <div className="recipe">
+      <div className={styles.recipesWrapper}>
+        <div className={styles.recipe}>
           <h2>
-            <a href="/index.html#/categories" className="bread-crum">
+            <a href="/index.html#/categories" className={styles.breadCrum}>
               Kategorier
             </a>
-            <span className="arrow">{">"}</span>
+            <span className={styles.arrow}>{">"}</span>
 
             <a
               href={`/index.html#/recipes/${this.state.recipe.categories_id}`}
-              className="bread-crum"
+              className={styles.breadCrum}
             >
               {this.state.categoryName}
             </a>
           </h2>
-          <h2 className="recipe-title">{this.state.recipe.name}</h2>
+          <h2 className={styles.recipeTitle}>{this.state.recipe.name}</h2>
           <span>
             Svårighetsgrad: {this.state.recipe.difficulty}&nbsp;|&nbsp;
             <i class="far fa-clock" /> {this.state.recipe.time_cooking}

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-import "./Recipes.css"
+import styles from "./Recipes.module.css"
 
 class Recipes extends Component {
   state = { recipes: [] }
@@ -19,12 +19,12 @@ class Recipes extends Component {
 
   render() {
     return (
-      <div className="recipes-wrapper">
-        <div className="recipes">
+      <div className={styles.recipesWrapper}>
+        <div className={styles.recipes}>
           <h2>Recept</h2>
           {this.state.recipes.map(recipe => (
             <div key={recipe.id}>
-              <Link to={`/recipe/${recipe.id}`} className="recipe-name">
+              <Link to={`/recipe/${recipe.id}`} className={styles.recipe}>
                 {recipe.name}
               </Link>
             </div>

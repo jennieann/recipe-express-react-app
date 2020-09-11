@@ -1,9 +1,9 @@
-.recipe-form-wrapper {
+.recipeWrapper {
   display: flex;
   justify-content: center;
 }
 
-.recipe-form {
+.recipeForm {
   display: flex;
   flex-direction: column;
   max-width: 500px;

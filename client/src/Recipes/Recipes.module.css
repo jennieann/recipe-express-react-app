@@ -1,6 +1,6 @@
 @import "../styles.css";
 
-.recipes-wrapper {
+.recipesWrapper {
   display: flex;
   justify-content: center;
   margin: var(--spacing-20) 0;
@@ -15,7 +15,7 @@
   width: 75%;
 }
 
-.recipe-name {
+.recipe {
   color: var(--fuzzy-wuzzy-brown);
   margin-bottom: var(--spacing-4);
 }
