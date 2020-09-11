@@ -53,7 +53,7 @@ function getAllRecipesByCategory(req, res, next) {
   var categoryID = parseInt(req.params.id)
 
   db.any(
-    "select recipes.name, recipes.id, recipes.ingredients, recipes.description, recipes.difficulty, recipes.time_cooking, recipes.categories_id from recipes left join categories on categories.id=recipes.categories_id where categories.id=$1",
+    "select recipes.name, recipes.id, recipes.ingredients, recipes.description, recipes.difficulty, recipes.time_cooking, recipes.categories_id, recipes.sub_category_id from recipes left join categories on categories.id=recipes.categories_id where categories.id=$1",
     categoryID
   )
     .then(function (data) {

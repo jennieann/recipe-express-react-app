@@ -1,28 +1,38 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import './Recipes.css';
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import "./Recipes.css"
 
 class Recipes extends Component {
-  state = { recipes: [] };
+  state = { recipes: [] }
 
   componentDidMount() {
-    fetch(`/api/categories/${this.props.match.params.id}/recipe/`)
-      .then((res) => res.json())
-      .then((data) => this.setState({ recipes: data.data }));
+    if (window.location.href.indexOf("sub_categorie") !== -1) {
+      fetch(`/api/sub_categories/${this.props.match.params.id}/recipe/`)
+        .then(res => res.json())
+        .then(data => this.setState({ recipes: data.data }))
+    } else {
+      fetch(`/api/categories/${this.props.match.params.id}/recipe/`)
+        .then(res => res.json())
+        .then(data => this.setState({ recipes: data.data }))
+    }
   }
 
   render() {
     return (
-      <div className="recipes">
-        <h2>Recept</h2>
-        {this.state.recipes.map((recipe) => (
-          <div key={recipe.id}>
-            <Link to={`/recipe/${recipe.id}`}>{recipe.name}</Link>
-          </div>
-        ))}
+      <div className="recipes-wrapper">
+        <div className="recipes">
+          <h2>Recept</h2>
+          {this.state.recipes.map(recipe => (
+            <div key={recipe.id}>
+              <Link to={`/recipe/${recipe.id}`} className="recipe-name">
+                {recipe.name}
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
-    );
+    )
   }
 }
 
-export default Recipes;
+export default Recipes

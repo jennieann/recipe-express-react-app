@@ -1,6 +1,21 @@
-.recipes {
+@import "../styles.css";
+
+.recipes-wrapper {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  margin: var(--spacing-20) 0;
+}
+
+.recipes {
+  background: #deeaee;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  overflow-wrap: break-word;
+  padding: 20px;
+  width: 75%;
+}
+
+.recipe-name {
+  color: var(--fuzzy-wuzzy-brown);
+  margin-bottom: var(--spacing-4);
 }

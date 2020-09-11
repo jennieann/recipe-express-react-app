@@ -1,0 +1,54 @@
+@import "../styles.css";
+
+.categoriesWrapper {
+  display: flex;
+  justify-content: center;
+  margin: var(--spacing-20) 0;
+}
+.categories {
+  background: #deeaee;
+  border-radius: 6px;
+  color: var(--dusk-light);
+  font-size: var(--font-size-16);
+  overflow-wrap: break-word;
+  padding: 20px;
+  width: 75%;
+}
+
+.categoriesSection {
+  margin-right: var(--spacing-40);
+  margin-bottom: var(--spacing-20);
+}
+
+.list {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.listItem {
+  list-style-type: none;
+}
+
+.mainCategory {
+  color: var(--fuzzy-wuzzy-brown);
+  font-size: var(--font-size-24);
+}
+
+.mainCategory:hover {
+  color: var(--mystic);
+  background-color: var(--sea-pink);
+}
+
+.subCategory {
+  color: var(--fuzzy-wuzzy-brown);
+  display: inline-block;
+  font-size: var(--font-size-16);
+  text-decoration: none;
+  margin-bottom: var(--spacing-4);
+}
+
+.subCategory:hover {
+  color: var(--mystic);
+  background-color: var(--sea-pink);
+}
