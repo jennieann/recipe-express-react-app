@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "react-router-dom"
 import { checkLoggedIn, getCategories } from "../helpers.js"
 import styles from "./AddRecipe.module.css"
 import classnames from "classnames"
@@ -58,7 +59,7 @@ class AddRecipe extends Component {
     return recipeId
   }
 
-  isNameSet() {
+  isRecipeNameSet() {
     const recipeNameInputValue =
       document.forms["addRecipe"].elements["name"].value
     return recipeNameInputValue === "" ? false : true
@@ -88,7 +89,7 @@ class AddRecipe extends Component {
     event.preventDefault()
     const data = new FormData(event.target)
 
-    if (this.isNameSet()) {
+    if (this.isRecipeNameSet()) {
       this.setErrorMessage()
       this.saveRecipe(this.getRecipeID(), data)
     } else {
@@ -105,7 +106,7 @@ class AddRecipe extends Component {
       const category = categories.find(
         cat => cat.id === subCategoryItem.parent_id
       )
-      const categoryName = category.name
+      const categoryName = category !== undefined ? category.name : ""
 
       subCategoryOptions.push(
         <option value={subCategoryItem.id} key={subCategoryItem.id}>
@@ -163,6 +164,17 @@ class AddRecipe extends Component {
               })}
             >
               {errorMessage}
+            </div>
+            <div className={styles.backToRecipe}>
+              {this.getRecipeID() !== undefined && (
+                <Link
+                  to={`/recipe/${this.getRecipeID()}`}
+                  className={styles.backToRecipeLink}
+                >
+                  <span className={styles.arrow}>{"<<"}</span>Tillbaka till
+                  receptet
+                </Link>
+              )}
             </div>
             <form
               onSubmit={this.handleSubmit}

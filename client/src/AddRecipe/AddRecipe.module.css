@@ -91,3 +91,22 @@
 .errorMessage.active {
   display: block;
 }
+
+.backToRecipe {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 496px;
+}
+
+.backToRecipeLink {
+  font-size: var(--font-size-14);
+  color: var(--fuzzy-wuzzy-brown);
+  padding: var(--spacing-4);
+  text-decoration: none;
+}
+
+.backToRecipeLink:hover {
+  background-color: var(--sea-pink);
+  color: var(--mystic);
+}
