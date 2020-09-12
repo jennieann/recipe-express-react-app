@@ -1,3 +1,5 @@
+import { getAllCategoriesFromAPI, getCategoriesFromAPI } from "./Api.js"
+
 export const checkLoggedIn = user => {
   let isLoggedIn = false
   if (user != null) {
@@ -5,20 +7,12 @@ export const checkLoggedIn = user => {
   }
   return isLoggedIn
 }
-const getCategoriesFromAPI = () => {
-  return fetch("/api/categories")
-    .then(res => res.json())
-    .then(data => {
-      const categories = data.data
-
-      return categories
-    })
-}
 
 export const getCategoryName = async categoryId => {
-  const categoriesNames = await getCategoriesFromAPI()
-
+  const categoriesNames = await getAllCategoriesFromAPI()
+  console.log("ID In", categoryId)
   const category = categoriesNames.find(category => {
+    console.log("ID", category.id)
     return category.id === categoryId
   })
 
