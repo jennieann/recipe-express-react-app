@@ -8,7 +8,8 @@ class Recipe extends Component {
     recipe: {},
     ingredients: "",
     user: null,
-    categoryName: ""
+    categoryName: "",
+    subCateoryName: ""
   }
 
   componentDidMount() {
@@ -28,6 +29,14 @@ class Recipe extends Component {
             categoryName: categoryName
           })
         })
+
+        getCategoryName(this.state.recipe.sub_category_id).then(
+          subCategoryName => {
+            this.setState({
+              subCategoryName: subCategoryName
+            })
+          }
+        )
       })
 
     fetch("/api/user")
@@ -66,12 +75,20 @@ class Recipe extends Component {
               Kategorier
             </a>
             <span className={styles.arrow}>{">"}</span>
-
             <a
               href={`/index.html#/recipes/${this.state.recipe.categories_id}`}
               className={styles.breadCrum}
             >
               {this.state.categoryName}
+            </a>
+            <span className={styles.arrow}>{">"}</span>
+            <a
+              href={`/index.html#/sub_categories/${
+                this.state.recipe.sub_category_id
+              }/recipe/`}
+              className={styles.breadCrum}
+            >
+              {this.state.subCategoryName}
             </a>
           </h2>
           <h2 className={styles.recipeTitle}>{this.state.recipe.name}</h2>

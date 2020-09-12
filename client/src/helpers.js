@@ -10,9 +10,8 @@ export const checkLoggedIn = user => {
 
 export const getCategoryName = async categoryId => {
   const categoriesNames = await getAllCategoriesFromAPI()
-  console.log("ID In", categoryId)
+
   const category = categoriesNames.find(category => {
-    console.log("ID", category.id)
     return category.id === categoryId
   })
 
