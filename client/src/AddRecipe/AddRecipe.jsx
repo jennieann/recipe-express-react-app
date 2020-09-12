@@ -1,13 +1,15 @@
 import React, { Component } from "react"
 import { checkLoggedIn, getCategories } from "../helpers.js"
 import styles from "./AddRecipe.module.css"
+import classnames from "classnames"
 
 class AddRecipe extends Component {
   state = {
     user: null,
     recipe: { name: "" },
     subCategories: [],
-    categories: []
+    categories: [],
+    errorMessage: ""
   }
   constructor() {
     super()
@@ -56,10 +58,19 @@ class AddRecipe extends Component {
     return recipeId
   }
 
-  handleSubmit(event) {
-    event.preventDefault()
-    const data = new FormData(event.target)
-    const recipeId = this.getRecipeID()
+  isNameSet() {
+    const recipeNameInputValue =
+      document.forms["addRecipe"].elements["name"].value
+    return recipeNameInputValue === "" ? false : true
+  }
+
+  setErrorMessage() {
+    this.isNameSet()
+      ? this.setState({ errorMessage: "" })
+      : this.setState({ errorMessage: "Du måste fylla i ett namn" })
+  }
+
+  saveRecipe(recipeId, data) {
     if (recipeId) {
       fetch(`/api/recipes/${recipeId}`, {
         method: "PUT",
@@ -70,6 +81,18 @@ class AddRecipe extends Component {
         method: "POST",
         body: data
       })
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const data = new FormData(event.target)
+
+    if (this.isNameSet()) {
+      this.setErrorMessage()
+      this.saveRecipe(this.getRecipeID(), data)
+    } else {
+      this.setErrorMessage()
     }
   }
 
@@ -118,6 +141,8 @@ class AddRecipe extends Component {
 
     const recipe = this.state.recipe
 
+    const errorMessage = this.state.errorMessage
+
     const {
       ingredients,
       time_cooking,
@@ -131,8 +156,19 @@ class AddRecipe extends Component {
     return (
       <div className={styles.recipeWrapper}>
         {isLoggedIn ? (
-          <div>
-            <form onSubmit={this.handleSubmit} className={styles.recipeForm}>
+          <div className={styles.formWrapper}>
+            <div
+              className={classnames(styles.errorMessage, {
+                [styles.active]: errorMessage !== ""
+              })}
+            >
+              {errorMessage}
+            </div>
+            <form
+              onSubmit={this.handleSubmit}
+              name="addRecipe"
+              className={styles.recipeForm}
+            >
               <label htmlFor="name">Receptnamn</label>
               <input
                 id="name"
@@ -140,6 +176,7 @@ class AddRecipe extends Component {
                 type="text"
                 value={name}
                 onChange={this.handleChange}
+                className={styles.input}
               />
 
               <label htmlFor="ingredients">Ingredienser</label>
@@ -151,6 +188,7 @@ class AddRecipe extends Component {
                 type="text"
                 value={ingredients}
                 onChange={this.handleChange}
+                className={styles.textarea}
               />
 
               <label htmlFor="description">Beskrivning</label>
@@ -162,6 +200,7 @@ class AddRecipe extends Component {
                 type="text"
                 value={description}
                 onChange={this.handleChange}
+                className={styles.textarea}
               />
 
               <label htmlFor="time_cooking">Tidsåtgång</label>
@@ -170,6 +209,7 @@ class AddRecipe extends Component {
                 name="time_cooking"
                 type="text"
                 defaultValue={recipe ? time_cooking : ""}
+                className={styles.input}
               />
 
               <label htmlFor="difficulty">Svårighetsgrad</label>
@@ -178,6 +218,7 @@ class AddRecipe extends Component {
                 name="difficulty"
                 value={difficulty}
                 onChange={this.handleChange}
+                className={styles.select}
               >
                 <option value="Lätt">Lätt</option>
                 <option value="Medel">Medel</option>
@@ -190,6 +231,7 @@ class AddRecipe extends Component {
                 name="categories_id"
                 value={categories_id}
                 onChange={this.handleChange}
+                className={styles.select}
               >
                 {this.renderCategoryOption()}
               </select>
@@ -199,13 +241,14 @@ class AddRecipe extends Component {
                 name="sub_category_id"
                 value={sub_category_id}
                 onChange={this.handleChange}
+                className={styles.select}
               >
                 {this.renderSubCategoryOptions()}
               </select>
-              {this.state.recipe ? (
-                <button>Uppdatera recept</button>
+              {this.getRecipeID() !== undefined ? (
+                <button className={styles.button}>Uppdatera recept</button>
               ) : (
-                <button>Lägg till recept</button>
+                <button className={styles.button}>Lägg till recept</button>
               )}
             </form>
           </div>
