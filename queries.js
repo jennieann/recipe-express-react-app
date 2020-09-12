@@ -33,6 +33,20 @@ function getAllCategories(req, res, next) {
     })
 }
 
+function getMainAndSubCategories(req, res, next) {
+  db.any("select * from categories")
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved ALL both main and sub categories",
+      })
+    })
+    .catch(function (err) {
+      return next(err)
+    })
+}
+
 function getAllSubCategories(req, res, next) {
   db.any(
     "select * from categories WHERE parent_id IS NOT NULL ORDER BY parent_id, name"
@@ -189,6 +203,7 @@ module.exports = {
   createRecipe: createRecipe,
   updateRecipe: updateRecipe,
   removeRecipe: removeRecipe,
+  getMainAndSubCategories: getMainAndSubCategories,
   getAllCategories: getAllCategories,
   getAllRecipesByCategory: getAllRecipesByCategory,
   getAllSubCategories: getAllSubCategories,

@@ -60,11 +60,12 @@ router.post("/api/recipes", db.createRecipe)
 router.put("/api/recipes/:id", db.updateRecipe)
 router.delete("/api/recipes/:id", db.removeRecipe)
 
+router.get("/api/all_categories", db.getMainAndSubCategories)
+
 router.get("/api/categories", db.getAllCategories)
 router.get("/api/categories/:id/recipe", db.getAllRecipesByCategory)
 
 router.get("/api/subcategories", db.getAllSubCategories)
-
 router.get("/api/sub_categories/:id/recipe", db.getAllRecipesBySubCategory)
 
 module.exports = router
