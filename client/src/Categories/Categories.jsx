@@ -25,34 +25,36 @@ class Categories extends Component {
     const categories = this.state.categories
     const subCategories = this.state.subCategories
     return categories.map(category => (
-      <div key={category.id} className={styles.categoriesSection}>
-        <li className={styles.listItem}>
-          <Link
-            to={`/recipes/${category.id}`}
-            id={category.id}
-            className={styles.mainCategory}
-          >
-            {category.name}
-          </Link>
-        </li>
-        {subCategories.map(sub => {
-          let subNameDiv
-          if (sub.parent_id === category.id) {
-            subNameDiv = (
-              <li className={styles.listItem}>
-                <Link
-                  to={`/sub_categories/${sub.id}/recipe`}
-                  id={category.id}
-                  className={styles.subCategory}
-                >
-                  {sub.name}
-                </Link>
-              </li>
-            )
-          }
-          return subNameDiv
-        })}
-      </div>
+      <li key={category.id} className={styles.categoriesSection}>
+        <ul className={styles.subList}>
+          <li className={styles.listItem}>
+            <Link
+              to={`/recipes/${category.id}`}
+              id={category.id}
+              className={styles.mainCategory}
+            >
+              {category.name}
+            </Link>
+          </li>
+          {subCategories.map(sub => {
+            let subNameListItem
+            if (sub.parent_id === category.id) {
+              subNameListItem = (
+                <li className={styles.listItem}>
+                  <Link
+                    to={`/sub_categories/${sub.id}/recipe`}
+                    id={category.id}
+                    className={styles.subCategory}
+                  >
+                    {sub.name}
+                  </Link>
+                </li>
+              )
+            }
+            return subNameListItem
+          })}
+        </ul>
+      </li>
     ))
   }
 

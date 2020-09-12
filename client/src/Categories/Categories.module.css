@@ -18,12 +18,18 @@
 .categoriesSection {
   margin-right: var(--spacing-40);
   margin-bottom: var(--spacing-20);
+  list-style-type: none;
+  padding: 0;
 }
 
 .list {
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+}
+
+.subList {
+  padding: 0;
 }
 
 .listItem {
