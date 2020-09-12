@@ -70,42 +70,57 @@ class Recipe extends Component {
     return (
       <div className={styles.recipesWrapper}>
         <div className={styles.recipe}>
-          <h2>
-            <a href="/index.html#/categories" className={styles.breadCrum}>
-              Kategorier
-            </a>
-            <span className={styles.arrow}>{">"}</span>
-            <a
-              href={`/index.html#/recipes/${this.state.recipe.categories_id}`}
-              className={styles.breadCrum}
-            >
-              {this.state.categoryName}
-            </a>
-            <span className={styles.arrow}>{">"}</span>
-            <a
-              href={`/index.html#/sub_categories/${
-                this.state.recipe.sub_category_id
-              }/recipe/`}
-              className={styles.breadCrum}
-            >
-              {this.state.subCategoryName}
-            </a>
-          </h2>
-          <h2 className={styles.recipeTitle}>{this.state.recipe.name}</h2>
-          <span>
-            Svårighetsgrad: {this.state.recipe.difficulty}&nbsp;|&nbsp;
-            <i class="far fa-clock" /> {this.state.recipe.time_cooking}
-          </span>
-          <h3>Ingredienser</h3>
-          <div className="text">{this.state.ingredients}</div>
+          <div className={styles.recipeDescriptionWrapper}>
+            <div>
+              <Link to="/categories" className={styles.breadCrum}>
+                Kategorier
+              </Link>
+              <span className={styles.arrow}>{">"}</span>
+              <Link
+                to={`/recipes/${this.state.recipe.categories_id}`}
+                className={styles.breadCrum}
+              >
+                {this.state.categoryName}
+              </Link>
+              <span className={styles.arrow}>{">"}</span>
+              <Link
+                to={`/sub_categories/${
+                  this.state.recipe.sub_category_id
+                }/recipe/`}
+                className={styles.breadCrum}
+              >
+                {this.state.subCategoryName}
+              </Link>
+            </div>
+            <h2 className={styles.recipeTitle}>{this.state.recipe.name}</h2>
+            <span>
+              Svårighetsgrad: {this.state.recipe.difficulty}&nbsp;|&nbsp;
+              <i class="far fa-clock" /> {this.state.recipe.time_cooking}
+            </span>
+            <h3>Ingredienser</h3>
+            <div className="text">{this.state.ingredients}</div>
 
-          <h3>Gör så här:</h3>
-          <div className="text">{this.state.description}</div>
-          {checkLoggedIn(this.state.user) && (
-            <Link to={`/updateRecipe/${this.state.recipe.id}`}>
-              Editera <i class="far fa-edit" />
-            </Link>
-          )}
+            <h3>Gör så här:</h3>
+            <div className="text">{this.state.description}</div>
+            {checkLoggedIn(this.state.user) && (
+              <Link
+                to={`/updateRecipe/${this.state.recipe.id}`}
+                className={styles.edithIcon}
+              >
+                <span className={styles.iconText}>Editera</span>{" "}
+                <i class="far fa-edit" />
+              </Link>
+            )}
+          </div>
+          <div className={styles.recipeImageWrapper}>
+            <figure className={styles.figure}>
+              <img
+                alt={this.state.recipe.name}
+                className={styles.image}
+                src="https://mittkok.expressen.se/wp-content/uploads/2017/05/skarmavbild-2017-07-12-kl--13-54-14.png"
+              />
+            </figure>
+          </div>
         </div>
       </div>
     )

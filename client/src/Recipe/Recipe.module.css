@@ -35,9 +35,66 @@
   overflow-wrap: break-word;
   padding: 20px;
   width: 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipeDescriptionWrapper {
+  width: 100%;
+  order: 2;
+}
+
+.recipeImageWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  order: 1;
+}
+
+.edithIcon {
+  text-decoration: none;
+  margin-left: 75%;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--dusk-light);
+  display: inline-flex;
+}
+
+.edithIcon:hover {
+  background-color: var(--sea-pink);
+  color: var(--mystic);
+}
+
+.iconText {
+  margin-right: var(--spacing-4);
+}
+
+.figure {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.image {
+  border-radius: 8px;
+  width: 100%;
 }
 
 .recipeTitle {
   font-family: var(--font-family-headers);
   font-size: var(--font-size-32);
+}
+
+@media screen and (min-width: 640px) {
+  .recipe {
+    flex-direction: row;
+  }
+  .recipeDescriptionWrapper {
+    width: 60%;
+    order: 1;
+  }
+  .recipeImageWrapper {
+    width: 40%;
+    order: 2;
+  }
 }
