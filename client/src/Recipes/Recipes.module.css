@@ -6,6 +6,11 @@
   margin: var(--spacing-20) 0;
 }
 
+.header {
+  font-family: var(--font-family-headers);
+  color: var(--dusk-light);
+}
+
 .recipes {
   background: #deeaee;
   border-radius: 6px;
@@ -17,5 +22,6 @@
 
 .recipe {
   color: var(--fuzzy-wuzzy-brown);
+  display: inline-block;
   margin-bottom: var(--spacing-4);
 }

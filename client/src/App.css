@@ -37,6 +37,7 @@ html {
   color: var(--dusk-light);
   display: flex;
   font-size: var(--font-size-32);
+  font-family: var(--font-family-headers);
   height: 140px;
   justify-content: center;
   margin-bottom: var(--spacing-20);

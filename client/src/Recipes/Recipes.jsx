@@ -21,7 +21,7 @@ class Recipes extends Component {
     return (
       <div className={styles.recipesWrapper}>
         <div className={styles.recipes}>
-          <h2>Recept</h2>
+          <h2 className={styles.header}>Recept</h2>
           {this.state.recipes.map(recipe => (
             <div key={recipe.id}>
               <Link to={`/recipe/${recipe.id}`} className={styles.recipe}>

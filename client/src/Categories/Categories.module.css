@@ -22,6 +22,10 @@
   padding: 0;
 }
 
+.header {
+  font-family: var(--font-family-headers);
+}
+
 .list {
   padding: 0;
   display: flex;
@@ -38,7 +42,7 @@
 
 .mainCategory {
   color: var(--fuzzy-wuzzy-brown);
-  font-size: var(--font-size-24);
+  font-size: var(--font-size-20);
 }
 
 .mainCategory:hover {

@@ -62,7 +62,7 @@ class Categories extends Component {
     return (
       <div className={styles.categoriesWrapper}>
         <div className={styles.categories}>
-          <h2>Kategorier</h2>
+          <h2 className={styles.header}>Kategorier</h2>
           <ul className={styles.list}>{this.renderCategories()}</ul>
         </div>
       </div>
