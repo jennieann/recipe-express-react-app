@@ -1,50 +1,41 @@
-import React, { Component } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { checkLoggedIn, getCategoryName } from "../helpers.js"
 import styles from "./Recipe.module.css"
 
-class Recipe extends Component {
-  state = {
-    recipe: {},
-    ingredients: "",
-    user: null,
-    categoryName: "",
-    subCateoryName: ""
-  }
+const Recipe = () => {
+  const [recipe, setRecipe] = useState({})
+  const [user, setUser] = useState(null)
+  const [categoryName, setCategoryName] = useState("")
+  const [subCategoryName, setSubCategoryName] = useState("")
 
-  componentDidMount() {
-    fetch(`/api/recipes/${this.props.match.params.id}`)
+  const urlHash = window.location.hash.split("/")
+  const recipeId = urlHash[2]
+
+  useEffect(() => {
+    fetch(`/api/recipes/${recipeId}`)
       .then(res => res.json())
       .then(data => {
-        this.setState({
-          recipe: data.data
-        })
-        this.setState({
-          ingredients: this.renderIgredients(this.state.recipe.ingredients),
-          description: this.renderDescription(this.state.recipe.description)
+        setRecipe(data.data)
+
+        getCategoryName(data.data.sub_category_id).then(subCategoryName => {
+          setSubCategoryName(subCategoryName)
         })
 
-        getCategoryName(this.state.recipe.categories_id).then(categoryName => {
-          this.setState({
-            categoryName: categoryName
-          })
+        getCategoryName(data.data.categories_id).then(categoryName => {
+          setCategoryName(categoryName)
         })
-
-        getCategoryName(this.state.recipe.sub_category_id).then(
-          subCategoryName => {
-            this.setState({
-              subCategoryName: subCategoryName
-            })
-          }
-        )
       })
+  }, [])
 
+  useEffect(() => {
     fetch("/api/user")
       .then(res => res.json())
-      .then(user => this.setState({ user: user.user }))
-  }
+      .then(user => setUser(user.user))
+  }, [])
 
-  renderIgredients = ingredients => {
+  const renderIgredients = ingredients => {
+    if (ingredients === undefined) return
     const ingredientsList = ingredients.split(";")
     return (
       <ul>
@@ -55,7 +46,8 @@ class Recipe extends Component {
     )
   }
 
-  renderDescription = description => {
+  const renderDescription = description => {
+    if (description === undefined) return
     const descriptionText = description.split(";")
     return (
       <ol>
@@ -66,65 +58,61 @@ class Recipe extends Component {
     )
   }
 
-  render() {
-    return (
-      <div className={styles.recipesWrapper}>
-        <div className={styles.recipe}>
-          <div className={styles.recipeDescriptionWrapper}>
-            <div>
-              <Link to="/categories" className={styles.breadCrum}>
-                Kategorier
-              </Link>
-              <span className={styles.arrow}>{">"}</span>
-              <Link
-                to={`/recipes/${this.state.recipe.categories_id}`}
-                className={styles.breadCrum}
-              >
-                {this.state.categoryName}
-              </Link>
-              <span className={styles.arrow}>{">"}</span>
-              <Link
-                to={`/sub_categories/${
-                  this.state.recipe.sub_category_id
-                }/recipe/`}
-                className={styles.breadCrum}
-              >
-                {this.state.subCategoryName}
-              </Link>
-            </div>
-            <h2 className={styles.recipeTitle}>{this.state.recipe.name}</h2>
-            <span>
-              Svårighetsgrad: {this.state.recipe.difficulty}&nbsp;|&nbsp;
-              <i class="far fa-clock" /> {this.state.recipe.time_cooking}
-            </span>
-            <h3>Ingredienser</h3>
-            <div className="text">{this.state.ingredients}</div>
+  return (
+    <div className={styles.recipesWrapper}>
+      <div className={styles.recipe}>
+        <div className={styles.recipeDescriptionWrapper}>
+          <div>
+            <Link to="/categories" className={styles.breadCrum}>
+              Kategorier
+            </Link>
+            <span className={styles.arrow}>{">"}</span>
+            <Link
+              to={`/recipes/${recipe.categories_id}`}
+              className={styles.breadCrum}
+            >
+              {categoryName}
+            </Link>
+            <span className={styles.arrow}>{">"}</span>
+            <Link
+              to={`/sub_categories/${recipe.sub_category_id}/recipe/`}
+              className={styles.breadCrum}
+            >
+              {subCategoryName}
+            </Link>
+          </div>
+          <h2 className={styles.recipeTitle}>{recipe.name}</h2>
+          <span>
+            Svårighetsgrad: {recipe.difficulty}&nbsp;|&nbsp;
+            <i class="far fa-clock" /> {recipe.time_cooking}
+          </span>
+          <h3>Ingredienser</h3>
+          <div className="text">{renderIgredients(recipe.ingredients)}</div>
 
-            <h3>Gör så här:</h3>
-            <div className="text">{this.state.description}</div>
-            {checkLoggedIn(this.state.user) && (
-              <Link
-                to={`/updateRecipe/${this.state.recipe.id}`}
-                className={styles.edithIcon}
-              >
-                <span className={styles.iconText}>Editera</span>{" "}
-                <i class="far fa-edit" />
-              </Link>
-            )}
-          </div>
-          <div className={styles.recipeImageWrapper}>
-            <figure className={styles.figure}>
-              <img
-                alt={this.state.recipe.name}
-                className={styles.image}
-                src="https://mittkok.expressen.se/wp-content/uploads/2017/05/skarmavbild-2017-07-12-kl--13-54-14.png"
-              />
-            </figure>
-          </div>
+          <h3>Gör så här:</h3>
+          <div className="text">{renderDescription(recipe.description)}</div>
+          {checkLoggedIn(user) && (
+            <Link
+              to={`/updateRecipe/${recipe.id}`}
+              className={styles.edithIcon}
+            >
+              <span className={styles.iconText}>Editera</span>{" "}
+              <i class="far fa-edit" />
+            </Link>
+          )}
+        </div>
+        <div className={styles.recipeImageWrapper}>
+          <figure className={styles.figure}>
+            <img
+              alt={recipe.name}
+              className={styles.image}
+              src="https://mittkok.expressen.se/wp-content/uploads/2017/05/skarmavbild-2017-07-12-kl--13-54-14.png"
+            />
+          </figure>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default Recipe
