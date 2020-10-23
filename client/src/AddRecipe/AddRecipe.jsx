@@ -141,11 +141,15 @@ function AddRecipe() {
 
   const handleChange = event => {
     const value =
-      event.target.name === "image" ? event.target.files[0] : event.target.value
+      event.target.name === "new_image" ? event.target.files[0] : event.target.value
     //console.log(value)
-    const { name } = event.target
-    setFile(URL.createObjectURL(event.target.files[0]))
-    setRecipe({ ...recipe, [name]: value })
+   const { name } = event.target
+   setRecipe({ ...recipe, [name]: value })
+
+   if(name === "new_image"){
+    setFile(URL.createObjectURL(value))
+   } 
+   
   }
 
   return (
@@ -254,7 +258,7 @@ function AddRecipe() {
             </select>
            
             {recipe.image !== undefined && file === null ? 
-            (<img name="image" className={styles.image} src={`/images/${recipe.image}`} key={Date.now()} alt={recipe.image}/>) : 
+            (<img name="image" className={styles.image} src={`/images/${recipe.image}`} alt={recipe.image}/>) : 
             (<img name="image" className={styles.image} src={file} key={Date.now()} alt={recipe.image}/>)
             }  
            
