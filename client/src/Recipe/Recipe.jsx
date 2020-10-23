@@ -106,7 +106,7 @@ const Recipe = () => {
             <img
               alt={recipe.name}
               className={styles.image}
-              src="https://mittkok.expressen.se/wp-content/uploads/2017/05/skarmavbild-2017-07-12-kl--13-54-14.png"
+              src={recipe.image? `/images/${recipe.image}` : "https://mittkok.expressen.se/wp-content/uploads/2017/05/skarmavbild-2017-07-12-kl--13-54-14.png"}
             />
           </figure>
         </div>

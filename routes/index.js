@@ -68,9 +68,9 @@ var db = require("../queries")
 router.get("/api/recipes", db.getAllRecipes)
 router.get("/api/recipes/:id", db.getSingleRecipe)
 
-router.post("/api/recipes", upload.single("image"), db.createRecipe)
+router.post("/api/recipes", upload.single("new_image"), db.createRecipe)
 
-router.put("/api/recipes/:id", db.updateRecipe)
+router.put("/api/recipes/:id", upload.single("new_image"), db.updateRecipe)
 router.delete("/api/recipes/:id", db.removeRecipe)
 
 router.get("/api/all_categories", db.getMainAndSubCategories)

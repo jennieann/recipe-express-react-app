@@ -10,6 +10,7 @@ function AddRecipe() {
   const [subCategories, setSubCategories] = useState([])
   const [categories, setCategories] = useState([])
   const [errorMessage, setErrorMessage] = useState("")
+  const [file, setFile] = useState(null)
 
   const getRecipeID = () => {
     const recipeId = window.location.href.split("/")[5]
@@ -72,8 +73,17 @@ function AddRecipe() {
       : setErrorMessage("Du måste fylla i ett namn")
   }
 
+  const updateImage = (data) =>{
+    for (var value of data.values()) {
+      if (typeof value === 'object'){
+        setRecipe({...recipe, image: value.name})
+      } 
+    }
+  }
+
   const saveRecipe = (recipeId, data) => {
     if (recipeId) {
+      updateImage(data)
       fetch(`/api/recipes/${recipeId}`, {
         method: "PUT",
         body: data
@@ -84,6 +94,7 @@ function AddRecipe() {
         body: data
       })
     }
+   
   }
 
   const handleSubmit = event => {
@@ -131,9 +142,9 @@ function AddRecipe() {
   const handleChange = event => {
     const value =
       event.target.name === "image" ? event.target.files[0] : event.target.value
-    console.log(value)
+    //console.log(value)
     const { name } = event.target
-
+    setFile(URL.createObjectURL(event.target.files[0]))
     setRecipe({ ...recipe, [name]: value })
   }
 
@@ -163,7 +174,7 @@ function AddRecipe() {
             onSubmit={handleSubmit}
             name="addRecipe"
             className={styles.recipeForm}
-            enctype="multipart/form-data"
+            encType="multipart/form-data"
           >
             <label htmlFor="name">Receptnamn</label>
             <input
@@ -241,7 +252,13 @@ function AddRecipe() {
             >
               {renderSubCategoryOptions()}
             </select>
-            <input type="file" onChange={handleChange} name="image" />
+           
+            {recipe.image !== undefined && file === null ? 
+            (<img name="image" className={styles.image} src={`/images/${recipe.image}`} key={Date.now()} alt={recipe.image}/>) : 
+            (<img name="image" className={styles.image} src={file} key={Date.now()} alt={recipe.image}/>)
+            }  
+           
+            <input type="file" className={styles.file} onChange={handleChange} name="new_image" />
             {getRecipeID() !== undefined ? (
               <button className={styles.button}>Uppdatera recept</button>
             ) : (

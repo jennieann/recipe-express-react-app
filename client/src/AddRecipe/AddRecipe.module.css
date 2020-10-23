@@ -28,10 +28,15 @@
 
 .input,
 .textarea,
-.select {
+.select,
+.file {
   border-radius: 4px;
   border: none;
   margin-bottom: var(--spacing-8);
+}
+
+.image {
+  width: 25%;
 }
 
 .input {

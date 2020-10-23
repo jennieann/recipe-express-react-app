@@ -159,8 +159,12 @@ function createRecipe(req, res, next) {
 
 //PUT
 function updateRecipe(req, res, next) {
+  // console.log("BODY", req.body)
+  // console.log("FILE", req.file)
+  if (req.file !== undefined) req.body["image"] = req.file.originalname
+
   db.none(
-    "update recipes set name=$1, ingredients=$2, description=$3, difficulty=$4, time_cooking=$5 , categories_id=$6, sub_category_id=$7 where id=$8",
+    "update recipes set name=$1, ingredients=$2, description=$3, difficulty=$4, time_cooking=$5 , categories_id=$6, sub_category_id=$7, image=$8 where id=$9",
     [
       req.body.name,
       req.body.ingredients,
@@ -169,6 +173,7 @@ function updateRecipe(req, res, next) {
       req.body.time_cooking,
       req.body.categories_id,
       req.body.sub_category_id,
+      req.body.image,
       parseInt(req.params.id),
     ]
   )
