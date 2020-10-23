@@ -135,10 +135,13 @@ function getSingleRecipe(req, res, next) {
 
 //POST
 function createRecipe(req, res, next) {
-  console.log("Banan", req.body)
+  // console.log("FIle", req.file)
+  // console.log("Body", req.body)
+  req.body["image"] = req.file.originalname
+
   db.none(
-    "insert into recipes(name, ingredients, description, difficulty, time_cooking ,categories_id, sub_category_id)" +
-      "values(${name}, ${ingredients}, ${description}, ${difficulty}, ${time_cooking}, ${categories_id}, ${sub_category_id})",
+    "insert into recipes(name, ingredients, description, difficulty, time_cooking ,categories_id, sub_category_id, image)" +
+      "values(${name}, ${ingredients}, ${description}, ${difficulty}, ${time_cooking}, ${categories_id}, ${sub_category_id}, ${image})",
     req.body
   )
     .then(function () {

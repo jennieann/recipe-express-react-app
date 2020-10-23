@@ -89,7 +89,6 @@ function AddRecipe() {
   const handleSubmit = event => {
     event.preventDefault()
     const data = new FormData(event.target)
-
     if (isRecipeNameSet()) {
       ErrorMessage()
       saveRecipe(getRecipeID(), data)
@@ -130,7 +129,10 @@ function AddRecipe() {
   }
 
   const handleChange = event => {
-    const { name, value } = event.target
+    const value =
+      event.target.name === "image" ? event.target.files[0] : event.target.value
+    console.log(value)
+    const { name } = event.target
 
     setRecipe({ ...recipe, [name]: value })
   }
@@ -161,6 +163,7 @@ function AddRecipe() {
             onSubmit={handleSubmit}
             name="addRecipe"
             className={styles.recipeForm}
+            enctype="multipart/form-data"
           >
             <label htmlFor="name">Receptnamn</label>
             <input
@@ -238,6 +241,7 @@ function AddRecipe() {
             >
               {renderSubCategoryOptions()}
             </select>
+            <input type="file" onChange={handleChange} name="image" />
             {getRecipeID() !== undefined ? (
               <button className={styles.button}>Uppdatera recept</button>
             ) : (

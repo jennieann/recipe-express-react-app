@@ -1,5 +1,18 @@
 var express = require("express")
 var router = express.Router()
+var multer = require("multer")
+
+//save file image to disk
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "client/public/images")
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  },
+})
+
+var upload = multer({ storage: storage })
 
 var passport = require("passport")
 
@@ -55,7 +68,7 @@ var db = require("../queries")
 router.get("/api/recipes", db.getAllRecipes)
 router.get("/api/recipes/:id", db.getSingleRecipe)
 
-router.post("/api/recipes", db.createRecipe)
+router.post("/api/recipes", upload.single("image"), db.createRecipe)
 
 router.put("/api/recipes/:id", db.updateRecipe)
 router.delete("/api/recipes/:id", db.removeRecipe)
