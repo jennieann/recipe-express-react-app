@@ -3,6 +3,11 @@ import { Link } from "react-router-dom"
 import { checkLoggedIn, getCategoryName } from "../helpers.js"
 import styles from "./Recipe.module.css"
 
+const imageS3 = "https://recipe-app1-images.s3.eu-north-1.amazonaws.com"
+
+//#Use when reading from local file system
+//const images = "/images"
+
 const Recipe = () => {
   const [recipe, setRecipe] = useState({})
   const [user, setUser] = useState(null)
@@ -108,7 +113,7 @@ const Recipe = () => {
               className={styles.image}
               src={
                 recipe.image
-                  ? `/images/${recipe.image}`
+                  ? `${imageS3}/${recipe.image}`
                   : "/images/placeholder-food.png"
               }
             />

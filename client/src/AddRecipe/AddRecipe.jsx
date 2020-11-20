@@ -4,6 +4,11 @@ import { checkLoggedIn, getCategories } from "../helpers.js"
 import styles from "./AddRecipe.module.css"
 import classnames from "classnames"
 
+const imageS3 = "https://recipe-app1-images.s3.eu-north-1.amazonaws.com"
+
+//#Use when reading from local file system
+//const images = "/images"
+
 function AddRecipe() {
   const [user, setUser] = useState(null)
   const [recipe, setRecipe] = useState({ name: "" })
@@ -73,11 +78,11 @@ function AddRecipe() {
       : setErrorMessage("Du måste fylla i ett namn")
   }
 
-  const updateImage = (data) =>{
+  const updateImage = data => {
     for (var value of data.values()) {
-      if (typeof value === 'object'){
-        setRecipe({...recipe, image: value.name})
-      } 
+      if (typeof value === "object") {
+        setRecipe({ ...recipe, image: value.name })
+      }
     }
   }
 
@@ -94,7 +99,6 @@ function AddRecipe() {
         body: data
       })
     }
-   
   }
 
   const handleSubmit = event => {
@@ -141,15 +145,16 @@ function AddRecipe() {
 
   const handleChange = event => {
     const value =
-      event.target.name === "new_image" ? event.target.files[0] : event.target.value
+      event.target.name === "new_image"
+        ? event.target.files[0]
+        : event.target.value
     //console.log(value)
-   const { name } = event.target
-   setRecipe({ ...recipe, [name]: value })
+    const { name } = event.target
+    setRecipe({ ...recipe, [name]: value })
 
-   if(name === "new_image"){
-    setFile(URL.createObjectURL(value))
-   } 
-   
+    if (name === "new_image") {
+      setFile(URL.createObjectURL(value))
+    }
   }
 
   return (
@@ -256,13 +261,30 @@ function AddRecipe() {
             >
               {renderSubCategoryOptions()}
             </select>
-           
-            {recipe.image !== undefined && file === null ? 
-            (<img name="image" className={styles.image} src={`/images/${recipe.image}`} alt={recipe.image}/>) : 
-            (<img name="image" className={styles.image} src={file} key={Date.now()} alt={recipe.image}/>)
-            }  
-           
-            <input type="file" className={styles.file} onChange={handleChange} name="new_image" />
+
+            {recipe.image !== undefined && file === null ? (
+              <img
+                name="image"
+                className={styles.image}
+                src={`${imageS3}/${recipe.image}`}
+                alt={recipe.image}
+              />
+            ) : (
+              <img
+                name="image"
+                className={styles.image}
+                src={file}
+                key={Date.now()}
+                alt={recipe.image}
+              />
+            )}
+
+            <input
+              type="file"
+              className={styles.file}
+              onChange={handleChange}
+              name="new_image"
+            />
             {getRecipeID() !== undefined ? (
               <button className={styles.button}>Uppdatera recept</button>
             ) : (
