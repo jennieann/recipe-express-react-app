@@ -6,6 +6,7 @@ var bodyParser = require("body-parser")
 var multer = require("multer")
 var upload = multer({ storage: multer.memoryStorage() })
 var logger = require("morgan")
+require("dotenv").config()
 
 var passport = require("passport")
 var Strategy = require("passport-local").Strategy
