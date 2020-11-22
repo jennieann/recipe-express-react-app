@@ -26,6 +26,12 @@ html {
   text-decoration: none;
   border-right: solid 1px var(--fuzzy-wuzzy-brown);
 }
+
+.nav-link:last-child {
+  border: none;
+  padding-right: 0;
+}
+
 .nav-link:hover,
 .nav-link-active {
   color: var(--mystic);
