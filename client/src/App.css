@@ -22,8 +22,9 @@ html {
   color: var(--fuzzy-wuzzy-brown);
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-bold);
-  padding: var(--spacing-20) var(--spacing-4);
+  padding: 0 var(--spacing-8);
   text-decoration: none;
+  border-right: solid 1px var(--fuzzy-wuzzy-brown);
 }
 .nav-link:hover,
 .nav-link-active {
