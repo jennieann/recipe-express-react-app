@@ -58,6 +58,5 @@ html {
   }
   .nav-link {
     font-size: var(--font-size-20);
-    padding: var(--spacing-20);
   }
 }
