@@ -51,7 +51,6 @@
 .recipeImageWrapper {
   width: 100%;
   display: flex;
-  align-items: center;
   order: 1;
   margin-bottom: var(--spacing-20);
 }
