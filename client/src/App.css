@@ -20,7 +20,7 @@ html {
 
 .nav-link {
   color: var(--fuzzy-wuzzy-brown);
-  font-size: var(--font-size-12);
+  font-size: var(--font-size-16);
   font-weight: var(--font-weight-bold);
   padding: var(--spacing-20) var(--spacing-4);
   text-decoration: none;
@@ -44,12 +44,6 @@ html {
   width: 100%;
 }
 
-/* @media (--phablet-and-larger) {
-  .header {
-    width: 1000px;
-    font-size: var(--font-size-72);
-  }
-} */
 @media screen and (min-width: 640px) {
   .header {
     font-size: var(--font-size-40);

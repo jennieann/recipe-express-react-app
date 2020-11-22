@@ -49,6 +49,7 @@
   display: flex;
   align-items: center;
   order: 1;
+  margin-bottom: var(--spacing-20);
 }
 
 .edithIcon {
@@ -74,7 +75,7 @@
   margin: 0;
   overflow: hidden;
   border-radius: 8px;
-  height: 400px;
+  max-height: 400px;
 }
 
 .image {
