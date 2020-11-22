@@ -137,7 +137,7 @@ function getSingleRecipe(req, res, next) {
 function createRecipe(req, res, next) {
   // console.log("FIle", req.file)
   // console.log("Body", req.body)
-  req.body["image"] = req.file.originalname
+  req.body["image"] = req.file !== undefined ? req.file.originalname : null
 
   db.none(
     "insert into recipes(name, ingredients, description, difficulty, time_cooking ,categories_id, sub_category_id, image)" +
