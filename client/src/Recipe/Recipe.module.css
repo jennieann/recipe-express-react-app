@@ -21,6 +21,10 @@
   white-space: pre-wrap;
 }
 
+.listItem {
+  margin-bottom: var(--spacing-16);
+}
+
 .recipesWrapper {
   display: flex;
   justify-content: center;

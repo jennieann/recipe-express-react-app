@@ -29,7 +29,6 @@ html {
 
 .nav-link:last-child {
   border: none;
-  padding-right: 0;
 }
 
 .nav-link:hover,

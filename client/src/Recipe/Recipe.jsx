@@ -45,7 +45,11 @@ const Recipe = () => {
     return (
       <ul>
         {ingredientsList.map((ingredient, index) => {
-          return <li key={index}>{ingredient}</li>
+          return (
+            <li key={index} className={styles.listItem}>
+              {ingredient}
+            </li>
+          )
         })}
       </ul>
     )
@@ -57,7 +61,11 @@ const Recipe = () => {
     return (
       <ol>
         {descriptionText.map((step, index) => {
-          return <li key={index}>{step}</li>
+          return (
+            <li key={index} className={styles.listItem}>
+              {step}
+            </li>
+          )
         })}
       </ol>
     )
