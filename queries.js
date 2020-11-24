@@ -137,7 +137,8 @@ function getSingleRecipe(req, res, next) {
 function createRecipe(req, res, next) {
   // console.log("FIle", req.file)
   // console.log("Body", req.body)
-  req.body["image"] = req.file !== undefined ? req.file.originalname : null
+  req.body["image"] =
+    req.file !== undefined ? req.file.originalname : "placeholder-food.png"
 
   db.none(
     "insert into recipes(name, ingredients, description, difficulty, time_cooking ,categories_id, sub_category_id, image)" +
@@ -161,7 +162,8 @@ function createRecipe(req, res, next) {
 function updateRecipe(req, res, next) {
   // console.log("BODY", req.body)
   // console.log("FILE", req.file)
-  if (req.file !== undefined) req.body["image"] = req.file.originalname
+  req.body["image"] =
+    req.file !== undefined ? req.file.originalname : "placeholder-food.png"
 
   db.none(
     "update recipes set name=$1, ingredients=$2, description=$3, difficulty=$4, time_cooking=$5 , categories_id=$6, sub_category_id=$7, image=$8 where id=$9",
