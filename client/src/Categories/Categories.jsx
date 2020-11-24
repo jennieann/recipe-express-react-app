@@ -40,7 +40,7 @@ class Categories extends Component {
             let subNameListItem
             if (sub.parent_id === category.id) {
               subNameListItem = (
-                <li className={styles.listItem}>
+                <li className={styles.listItem} key={sub.id}>
                   <Link
                     to={`/sub_categories/${sub.id}/recipe`}
                     id={category.id}
