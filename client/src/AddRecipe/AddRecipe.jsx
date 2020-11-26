@@ -10,17 +10,18 @@ const imageS3 = "https://recipe-app1-images.s3.eu-north-1.amazonaws.com"
 //const images = "/images"
 
 function AddRecipe() {
+  const recipeIdFromUrl = window.location.href.split("/")[5]
+
+  const initialValueRecipeId =
+    recipeIdFromUrl !== undefined ? recipeIdFromUrl : null
+
   const [user, setUser] = useState(null)
   const [recipe, setRecipe] = useState({ name: "" })
   const [subCategories, setSubCategories] = useState([])
   const [categories, setCategories] = useState([])
   const [errorMessage, setErrorMessage] = useState("")
   const [file, setFile] = useState(null)
-
-  const getRecipeID = () => {
-    const recipeId = window.location.href.split("/")[5]
-    return recipeId
-  }
+  const [recipeId, setRecipeId] = useState(initialValueRecipeId)
 
   const getSubCategories = async () => {
     let response = await fetch("/api/subcategories")
@@ -40,13 +41,13 @@ function AddRecipe() {
     })
   }, [])
 
-  if (getRecipeID()) {
-    useEffect(() => {
-      getRecipeAsync(getRecipeID()).then(data => {
-        setRecipe(data.data)
-      })
-    }, [])
-  }
+  useEffect(() => {
+    if (recipeId === null) return
+
+    getRecipeAsync(recipeId).then(data => {
+      setRecipe(data.data)
+    })
+  }, [])
 
   useEffect(() => {
     getUser().then(user => setUser(user.user))
@@ -80,7 +81,7 @@ function AddRecipe() {
 
   const updateImage = data => {
     for (var value of data.values()) {
-      if (typeof value === "object") {
+      if (typeof value === "object" && value.name !== "") {
         setRecipe({ ...recipe, image: value.name })
       }
     }
@@ -98,6 +99,10 @@ function AddRecipe() {
         method: "POST",
         body: data
       })
+        .then(response => response.json())
+        .then(data => {
+          setRecipeId(data.id)
+        })
     }
   }
 
@@ -106,7 +111,7 @@ function AddRecipe() {
     const data = new FormData(event.target)
     if (isRecipeNameSet()) {
       ErrorMessage()
-      saveRecipe(getRecipeID(), data)
+      saveRecipe(recipeId, data)
     } else {
       ErrorMessage()
     }
@@ -169,9 +174,9 @@ function AddRecipe() {
             {errorMessage}
           </div>
           <div className={styles.backToRecipe}>
-            {getRecipeID() !== undefined && (
+            {recipeId !== undefined && (
               <Link
-                to={`/recipe/${getRecipeID()}`}
+                to={`/recipe/${recipeId}`}
                 className={styles.backToRecipeLink}
               >
                 <span className={styles.arrow}>{"<<"}</span>Tillbaka till
@@ -285,7 +290,7 @@ function AddRecipe() {
               onChange={handleChange}
               name="new_image"
             />
-            {getRecipeID() !== undefined ? (
+            {recipeId ? (
               <button className={styles.button}>Uppdatera recept</button>
             ) : (
               <button className={styles.button}>Lägg till recept</button>

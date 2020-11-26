@@ -140,13 +140,14 @@ function createRecipe(req, res, next) {
   req.body["image"] =
     req.file !== undefined ? req.file.originalname : "placeholder-food.png"
 
-  db.none(
+  db.one(
     "insert into recipes(name, ingredients, description, difficulty, time_cooking ,categories_id, sub_category_id, image)" +
-      "values(${name}, ${ingredients}, ${description}, ${difficulty}, ${time_cooking}, ${categories_id}, ${sub_category_id}, ${image})",
+      "values(${name}, ${ingredients}, ${description}, ${difficulty}, ${time_cooking}, ${categories_id}, ${sub_category_id}, ${image}) RETURNING id",
     req.body
   )
-    .then(function () {
+    .then(function (data) {
       res.status(200).json({
+        id: data.id,
         status: "success",
         message: "Inserted ONE recipe",
       })
