@@ -161,10 +161,11 @@ function createRecipe(req, res, next) {
 
 //PUT
 function updateRecipe(req, res, next) {
-  // console.log("BODY", req.body)
-  // console.log("FILE", req.file)
+  //console.log("BODY", req.body)
+  console.log("FILE", req.file)
+  console.log(req.body)
   req.body["image"] =
-    req.file !== undefined ? req.file.originalname : "placeholder-food.png"
+    req.file !== undefined ? req.file.originalname : req.body.image_name
 
   db.none(
     "update recipes set name=$1, ingredients=$2, description=$3, difficulty=$4, time_cooking=$5 , categories_id=$6, sub_category_id=$7, image=$8 where id=$9",

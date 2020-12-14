@@ -82,7 +82,9 @@ function AddRecipe() {
   const updateImage = data => {
     for (var value of data.values()) {
       if (typeof value === "object" && value.name !== "") {
-        setRecipe({ ...recipe, image: value.name })
+        if (recipe.image !== value.name) {
+          setRecipe({ ...recipe, image: value.name })
+        }
       }
     }
   }
@@ -111,6 +113,7 @@ function AddRecipe() {
     const data = new FormData(event.target)
     if (isRecipeNameSet()) {
       ErrorMessage()
+
       saveRecipe(recipeId, data)
     } else {
       ErrorMessage()
@@ -153,7 +156,7 @@ function AddRecipe() {
       event.target.name === "new_image"
         ? event.target.files[0]
         : event.target.value
-    //console.log(value)
+
     const { name } = event.target
     setRecipe({ ...recipe, [name]: value })
 
@@ -283,7 +286,11 @@ function AddRecipe() {
                 alt={recipe.image}
               />
             )}
-
+            <input
+              type="hidden"
+              value={recipe.image ? recipe.image : ""}
+              name="image_name"
+            />
             <input
               type="file"
               className={styles.file}
