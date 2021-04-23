@@ -10,7 +10,19 @@ var pgp = require("pg-promise")(options)
 //get postgres DB
 // connectionString is for Heroku database setup
 // rest is for running on localhost
-var db = pgp({})
+var db = pgp({
+  connectionString: process.env.DATABASE_URL,
+  // host: "ec2-23-23-184-76.compute-1.amazonaws.com",
+  // port: 5432,
+  // database: process.env.HEROKU_DB,
+  // user: process.env.HEROKU_USER,
+  //password: process.env.PASSWORD_PROD,
+  host: "localhost",
+  port: 5432,
+  database: "recipes",
+  user: "postgres",
+  password: process.env.PASSWORD_DEV,
+})
 
 function getAllCategories(req, res, next) {
   db.any("select * from categories WHERE parent_id IS NULL")
