@@ -11,12 +11,9 @@ var pgp = require("pg-promise")(options)
 // connectionString is for Heroku database setup
 // rest is for running on localhost
 var db = pgp({
-  connectionString: process.env.DATABASE_URL,
-  // host: "ec2-23-23-184-76.compute-1.amazonaws.com",
-  // port: 5432,
-  // database: process.env.HEROKU_DB,
-  // user: process.env.HEROKU_USER,
-  // password: process.env.PASSWORD_PROD,
+  connectionString: process.env.DATABASE_URL + "?sslmode=require",
+  ssl: { rejectUnauthorized: false },
+
   // host: "localhost",
   // port: 5432,
   // database: "recipes",
