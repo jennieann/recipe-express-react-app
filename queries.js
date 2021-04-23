@@ -13,7 +13,7 @@ var pgp = require("pg-promise")(options)
 var db = pgp({
   connectionString: process.env.DATABASE_URL,
 
-  ssl: { sslmode: "require", rejectUnauthorized: false },
+  ssl: { rejectUnauthorized: false },
 
   // host: "localhost",
   // port: 5432,
