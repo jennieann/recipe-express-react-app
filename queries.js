@@ -15,13 +15,8 @@ var db = pgp({
   ssl: {
     rejectUnauthorized: false,
   },
-  // ssl: true,
-  // extra: {
-  //   ssl: {
-  //     rejectUnauthorized: false,
-  //   },
-  // },
 
+  // om man vill köra mot lokal databas
   // host: "localhost",
   // port: 5432,
   // database: "recipes",
