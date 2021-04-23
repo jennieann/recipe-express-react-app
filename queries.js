@@ -11,8 +11,8 @@ var pgp = require("pg-promise")(options)
 // connectionString is for Heroku database setup
 // rest is for running on localhost
 var db = pgp({
-  connectionString: process.env.DATABASE_URL + "?sslmode=require",
-  ssl: { rejectUnauthorized: false },
+  connectionString: process.env.DATABASE_URL,
+  ssl: { required: true, rejectUnauthorized: false },
 
   // host: "localhost",
   // port: 5432,
