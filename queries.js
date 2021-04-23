@@ -25,6 +25,7 @@ var db = pgp({
 })
 
 function getAllCategories(req, res, next) {
+  console.logt("Kommer hit Kategorier")
   db.any("select * from categories WHERE parent_id IS NULL")
     .then(function (data) {
       res.status(200).json({
@@ -34,6 +35,7 @@ function getAllCategories(req, res, next) {
       })
     })
     .catch(function (err) {
+      console.log("Message from DB", err.message)
       return next(err)
     })
 }
