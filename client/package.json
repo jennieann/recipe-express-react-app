@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/helper-builder-react-jsx": "^7.12.13",
     "@babel/helper-regex": "^7.10.5",
+    "@babel/plugin-transform-react-jsx": "^7.13.12",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-router-dom": "^4.3.1",
@@ -24,5 +26,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6"
+  }
 }
