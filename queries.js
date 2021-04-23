@@ -16,17 +16,16 @@ var db = pgp({
   // port: 5432,
   // database: process.env.HEROKU_DB,
   // user: process.env.HEROKU_USER,
-  //password: process.env.PASSWORD_PROD,
-  host: "localhost",
-  port: 5432,
-  database: "recipes",
-  user: "postgres",
-  password: process.env.PASSWORD_DEV,
+  // password: process.env.PASSWORD_PROD,
+  // host: "localhost",
+  // port: 5432,
+  // database: "recipes",
+  // user: "postgres",
+  // password: process.env.PASSWORD_DEV,
 })
 
 function getAllCategories(req, res, next) {
   console.log("Kommer hit Kategorier")
-  return res.status(200).json({ category: "Min kategori" })
   db.any("select * from categories WHERE parent_id IS NULL")
     .then(function (data) {
       res.status(200).json({
