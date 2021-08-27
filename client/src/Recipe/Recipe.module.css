@@ -1,4 +1,9 @@
 @import "../styles.css";
+.howToWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .arrow {
   font-size: var(--font-size-14);
   color: var(--fuzzy-wuzzy-brown);
@@ -105,5 +110,22 @@
   .recipeImageWrapper {
     width: 40%;
     order: 2;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .howToWrapper {
+    flex-direction: row;
+  }
+
+  .image {
+    margin-top: 40px;
+  }
+  .ingredients {
+    width: 100%;
+  }
+  .howTo {
+    width: 100%;
+    margin-right: 20px;
   }
 }

@@ -99,11 +99,18 @@ const Recipe = () => {
             Svårighetsgrad: {recipe.difficulty}&nbsp;|&nbsp;
             <i class="far fa-clock" /> {recipe.time_cooking}
           </span>
-          <h3>Ingredienser</h3>
-          <div className="text">{renderIgredients(recipe.ingredients)}</div>
-
-          <h3>Gör så här:</h3>
-          <div className="text">{renderDescription(recipe.description)}</div>
+          <div className={styles.howToWrapper}>
+            <div className={styles.ingredients}>
+              <h3>Ingredienser</h3>
+              <div className="text">{renderIgredients(recipe.ingredients)}</div>
+            </div>
+            <div className={styles.howTo}>
+              <h3>Gör så här:</h3>
+              <div className="text">
+                {renderDescription(recipe.description)}
+              </div>
+            </div>
+          </div>
           {checkLoggedIn(user) && (
             <Link
               to={`/updateRecipe/${recipe.id}`}
