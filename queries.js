@@ -107,6 +107,20 @@ function getAllRecipesBySubCategory(req, res, next) {
     })
 }
 
+//GET last two recipes
+function getLastRecipes(req, res, next) {
+  db.any("select * from recipes ORDER BY id DESC LIMIT 2")
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved LAST 2 recipes",
+      })
+    })
+    .catch(function (err) {
+      return next(err)
+    })
+}
 //GET all
 function getAllRecipes(req, res, next) {
   db.any("select * from recipes")
@@ -216,14 +230,15 @@ function removeRecipe(req, res, next) {
 }
 
 module.exports = {
-  getAllRecipes: getAllRecipes,
-  getSingleRecipe: getSingleRecipe,
-  createRecipe: createRecipe,
-  updateRecipe: updateRecipe,
-  removeRecipe: removeRecipe,
-  getMainAndSubCategories: getMainAndSubCategories,
-  getAllCategories: getAllCategories,
-  getAllRecipesByCategory: getAllRecipesByCategory,
-  getAllSubCategories: getAllSubCategories,
-  getAllRecipesBySubCategory: getAllRecipesBySubCategory,
+  getAllRecipes,
+  getSingleRecipe,
+  createRecipe,
+  updateRecipe,
+  removeRecipe,
+  getMainAndSubCategories,
+  getAllCategories,
+  getAllRecipesByCategory,
+  getAllSubCategories,
+  getAllRecipesBySubCategory,
+  getLastRecipes,
 }

@@ -89,6 +89,7 @@ router.get("/api/user", function (req, res) {
 var db = require("../queries")
 
 router.get("/api/recipes", db.getAllRecipes)
+router.get("/api/recipes/last", db.getLastRecipes)
 router.get("/api/recipes/:id", db.getSingleRecipe)
 
 router.post("/api/recipes", upload.single("new_image"), db.createRecipe)
