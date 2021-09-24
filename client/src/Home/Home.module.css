@@ -1,0 +1,65 @@
+@import "../styles.css";
+.homeWrapper {
+  display: flex;
+  justify-content: center;
+  margin: var(--spacing-20) 0;
+}
+.home {
+  background: #deeaee;
+  border-radius: 6px;
+  font-size: var(--font-size-16);
+  overflow-wrap: break-word;
+  padding: 20px;
+  width: 75%;
+  height: fit-content;
+}
+.header {
+  font-family: var(--font-family-headers);
+  color: var(--dusk-light);
+}
+
+.recipeContainer {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100px;
+  border-radius: 4px;
+  background-color: var(--white);
+  color: var(--dusk-light);
+}
+
+.recipeContainer:after {
+  content: "";
+  position: absolute;
+  top: 93%;
+  left: 0;
+  height: 100%;
+  width: 110%;
+  background: var(--spring-rain);
+  transform: rotate(-12deg);
+}
+
+.date {
+  padding: var(--spacing-20);
+  position: absolute;
+  top: 62px;
+  right: -12px;
+  z-index: 100;
+  font-size: 12px;
+}
+
+.recipe {
+  padding: var(--spacing-20);
+}
+@media screen and (min-width: 640px) {
+  .recipeContainer:after {
+    width: 150%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .recipeContainer:after {
+    width: 160%;
+  }
+}
